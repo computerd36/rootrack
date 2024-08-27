@@ -25,7 +25,7 @@ export function PageForm() {
                 <div className="flex items-center justify-between">
                     <Button
                         color="warning"
-                        className="w-1/6"
+                        className="w-16"
                         onClick={() => {
                             if (step === 2) {
                                 setStep(1);
@@ -33,7 +33,7 @@ export function PageForm() {
                         }}
                         disabled={step === 1}
                     >
-                        <HiOutlineArrowLeft className="ml-2 h-5 w-5" />
+                        <HiOutlineArrowLeft className="h-5 w-5" />
                     </Button>
                     <Button
                         color="warning"

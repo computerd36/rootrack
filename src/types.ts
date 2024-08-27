@@ -52,3 +52,20 @@ export interface Withdrawal {
     transactionId: string;
 }
 
+// Stats
+export interface Stats {
+    totalDeposits: number;
+    totalWithdrawals: number;
+
+    totalDepositsValue: number;
+    totalWithdrawalsValue: number;
+
+    totalProfit: number;
+    totalProfitPercentage: number;
+    totalProfitChangeLast7Days: number;
+    totalProfitChangeLastMonth: number;
+
+    biggestDeposit: Deposit;
+    biggestWithdrawal: Withdrawal;
+}
+
