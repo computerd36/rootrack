@@ -3,15 +3,17 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FaCircleXmark } from 'react-icons/fa6';
-import { isValidDeposit, isValidWithdrawal } from '../../util/fileValidator';
+import { isValidBet, isValidDeposit, isValidWithdrawal } from '../../util/fileValidator';
 import { useBettingData } from '../../context/bettingDataContext';
+import { Bet } from '../../types';
 
 export function FormUploadFiles() {
 
     //context 
-    const { setWithdrawals, setDeposits } = useBettingData();
+    const { setWithdrawals, setDeposits, setBets } = useBettingData();
 
     const [withdrawalsFile, setWithdrawalsFile] = useState<File | null>(null);
+    const [withdrawalsDisabled, setWithdrawalsDisabled] = useState(false);
 
     const handleWithdrawalsUpload = (file: File) => {
         if (file.name !== 'withdrawals.json') {
@@ -23,10 +25,10 @@ export function FormUploadFiles() {
         reader.onload = (e) => {
             try {
                 const json = JSON.parse(e.target?.result as string);
-                console.log("Withdrawals JSON:", json); // Log the JSON
                 if (isValidWithdrawal(json.data[0])) {
                     setWithdrawalsFile(file);
                     console.log("Uploaded Withdrawals:", json);
+                    setWithdrawalsDisabled(true);
                 } else {
                     console.log("Invalid Withdrawals JSON structure");
                 }
@@ -44,6 +46,7 @@ export function FormUploadFiles() {
     };
 
     const [depositsFile, setDepositsFile] = useState<File | null>(null);
+    const [depositsDisabled, setDepositsDisabled] = useState(false);
 
     const handleDepositsUpload = (file: File) => {
         if (file.name !== 'deposits.json') {
@@ -55,10 +58,10 @@ export function FormUploadFiles() {
         reader.onload = (e) => {
             try {
                 const json = JSON.parse(e.target?.result as string);
-                console.log("Deposits JSON:", json); // Log the JSON
                 if (isValidDeposit(json.data[0])) {
                     setDepositsFile(file);
                     console.log("Uploaded Deposits:", json);
+                    setDepositsDisabled(true);
                 } else {
                     console.log("Invalid Deposits JSON structure");
                 }
@@ -75,64 +78,136 @@ export function FormUploadFiles() {
         }
     };
 
+    const [betsFile, setBetsFile] = useState<File | null>(null);
+    const [betsDisabled, setBetsDisabled] = useState(false);
+
+    const handleBetsUpload = (file: File) => {
+        if (file.name !== 'bets.json') {
+            console.log("File is not a valid bets file");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const json = JSON.parse(e.target?.result as string);
+
+                if (json.data.every(isValidBet)) {
+                    setBetsFile(file);
+                    console.log("Uploaded Bets:", json);
+                    setBetsDisabled(true);
+                } else {
+                    console.log("Invalid Bets JSON structure");
+                }
+            } catch (error) {
+                console.log("Error parsing Bets JSON: ", error);
+            }
+        };
+        reader.readAsText(file);
+    };
+
+
+    const onFileChangeBets = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files[0]) {
+            handleBetsUpload(event.target.files[0]);
+        }
+    };
+
     useEffect(() => {
-        if (withdrawalsFile && depositsFile) {
-            console.log("Both files uploaded");
+        if (withdrawalsFile && depositsFile && betsFile) {
+            console.log("All three files uploaded");
             setWithdrawals([]);
             setDeposits([]);
+            setBets([]);
 
-            const reader = new FileReader();
+            const depositsReader = new FileReader();
 
-            reader.onload = (e) => {
+            depositsReader.onload = (e) => {
                 try {
                     const json = JSON.parse(e.target?.result as string);
-                    console.log("Deposits JSON:", json); // Log the JSON
                     if (json.data.every(isValidDeposit)) {
                         setDeposits(json.data);
                         console.log("Uploaded Deposits:", json);
                     } else {
-                        console.log("Invalid Deposits JSON structure");
+                        alert("Invalid Deposits JSON structure");
                     }
                 } catch (error) {
-                    console.log("Error parsing Deposits JSON: ", error);
+                    alert("Error parsing Deposits JSON: " + error);
                 }
             };
 
-            reader.readAsText(depositsFile);
+            depositsReader.readAsText(depositsFile);
 
-            const reader2 = new FileReader();
+            const withdrawalsReader = new FileReader();
 
-            reader2.onload = (e) => {
+            withdrawalsReader.onload = (e) => {
                 try {
                     const json = JSON.parse(e.target?.result as string);
-                    console.log("Withdrawals JSON:", json); // Log the JSON
                     if (json.data.every(isValidWithdrawal)) {
                         setWithdrawals(json.data);
                         console.log("Uploaded Withdrawals:", json);
                     } else {
-                        console.log("Invalid Withdrawals JSON structure");
+                        alert("Invalid Withdrawals JSON structure");
                     }
                 } catch (error) {
-                    console.log("Error parsing Withdrawals JSON: ", error);
+                    alert("Error parsing Withdrawals JSON: " + error);
                 }
             };
 
-            reader2.readAsText(withdrawalsFile);
-        }
-    }, [depositsFile, setDeposits, setWithdrawals, withdrawalsFile]);
+            withdrawalsReader.readAsText(withdrawalsFile);
 
+            const betsReader = new FileReader();
+
+            betsReader.onload = (e) => {
+                try {
+                    const json = JSON.parse(e.target?.result as string);
+                    if (json.data.every(isValidBet)) {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        const bets = json.data.map((bet: any): Bet => ({
+                            betAmount: bet.betAmount,
+                            currency: bet.currency,
+                            balanceType: bet.balanceType,
+                            gameNameDisplay: bet.gameNameDisplay,
+                            gameIdentifier: bet.gameIdentifier,
+                            mult: bet.mult,
+                            timestamp: bet.timestamp,
+                            won: bet.won,
+                            profit: bet.profit,
+                            category: bet.category
+                        }));
+                        setBets(bets);
+                        console.log("Uploaded Bets:", bets);
+                    } else {
+                        alert("Invalid Bets JSON structure");
+                    }
+                } catch (error) {
+                    alert("Error parsing Bets JSON: " + error);
+                }
+            };
+
+            betsReader.readAsText(betsFile);
+
+        }
+    }, [betsFile, depositsFile, setBets, setDeposits, setWithdrawals, withdrawalsFile]);
 
     return (
         <React.Fragment>
-            <div className='flex flex-col justify-center h-full gap-3'>
-                <h2 className='text-white text-2xl text-center font-bold mb-5'>Upload your deposits and withdrawals from Roobet</h2>
+            <div className='flex flex-col justify-between h-full gap-3 mb-5'>
+                <div>
+                    <h2 className='text-white text-2xl text-center font-bold'>Select your files from Roobet</h2>
+                    <h3 className='text-indigo-300 text-sm text-center mt-0'>All calculations and statistics are processed locally on your computer, ensuring no files are sent to external servers.</h3>
+                </div>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-white text-xl font-bold flex items-center gap-2'>{withdrawalsFile ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Withdrawals</h2>
-                    <FileInput id="file-upload" className='w-3/4' accept='.json' onChange={onFileChangeWithdrawals} />
+                    <FileInput id="file-upload-withdrawals" className='w-3/4' accept='.json' onChange={onFileChangeWithdrawals} disabled={withdrawalsDisabled} />
                 </div>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-white text-xl font-bold flex items-center gap-2'>{depositsFile ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Deposits</h2>
-                    <FileInput id="file-upload" className='w-3/4' accept='.json' onChange={onFileChangeDeposits} />
+                    <FileInput id="file-upload-deposits" className='w-3/4' accept='.json' onChange={onFileChangeDeposits} disabled={depositsDisabled} />
+                </div>
+                <div className='flex items-center justify-between'>
+                    <h2 className='text-white text-xl font-bold flex items-center gap-2'>{betsFile ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Bets</h2>
+                    <FileInput id="file-upload-bets" className='w-3/4' accept='.json' onChange={onFileChangeBets} disabled={betsDisabled} />
                 </div>
             </div>
         </React.Fragment >

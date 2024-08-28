@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { useBettingData } from '../../../context/bettingDataContext';
 import { format, parseISO } from 'date-fns';
+import { FaChartLine } from 'react-icons/fa';
+import { Card } from 'flowbite-react';
 
 interface ProfitDataPoint {
     date: string;
@@ -51,47 +53,26 @@ export function ProfitLineChart() {
         }
     }, [deposits, withdrawals]);
 
-    // Custom tick formatter to hide first and last label
-    const renderCustomAxisTick = ({ x, y, payload, index }: any) => {
-        if (index === 0) {
-            return (
-                <text x={x} y={y + 10} fill="#e5edff" textAnchor="start">
-                    {format(parseISO(payload.value), 'MMM dd')}
-                </text>
-            )
-        }
-
-        if (index === profitData.length - 1) {
-            return (
-                <text x={x} y={y + 10} fill="#e5edff" textAnchor="end">
-                    {format(parseISO(payload.value), 'MMM dd')}
-                </text>
-            )
-        }
-
-        return (
-            <text x={x} y={y + 10} fill="#e5edff" textAnchor="middle">
-                {format(parseISO(payload.value), 'MMM dd')}
-            </text>
-        );
-    };
-
     if (profitData.length === 0) {
         return <p>No profit data available.</p>;
     }
 
     return (
-        <ResponsiveContainer width="100%" height={400} className="bg-indigo-900 rounded-xl">
-            <LineChart
-                data={profitData}
-                margin={{ top: 30, right: 30, left: 20, bottom: 30 }}
-            >
-                <XAxis dataKey="date" tickFormatter={(tick) => format(parseISO(tick), 'MMM dd')} tick={renderCustomAxisTick} />
-                <YAxis stroke='#e5edff' tickFormatter={(tick) => `${tick} $`} />
-                <ReferenceLine y={0} stroke="red" strokeDasharray="3 3" />
-                <Tooltip />
-                <Line type="monotone" dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart>
-        </ResponsiveContainer>
+        <Card className="bg-indigo-900 grow w-full">
+            <h2 className='flex items-center gap-2 text-indigo-300'><FaChartLine /> Profit Performance</h2>
+            <ResponsiveContainer width="100%" height={400}>
+                <LineChart
+                    data={profitData}
+                    margin={{ right: 30, left: 20}}
+                    
+                >
+                    <XAxis stroke='#e5edff' dataKey="date" tickFormatter={(tick) => format(parseISO(tick), 'dd.MM')} />
+                    <YAxis stroke='#e5edff' tickFormatter={(tick) => `${tick} $`} />
+                    <ReferenceLine y={0} stroke="red" strokeDasharray="3 3" />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
+                </LineChart>
+            </ResponsiveContainer>
+        </Card>
     );
 }

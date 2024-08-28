@@ -5,6 +5,7 @@ import { FormUploadFiles } from "../components/form/FormUploadFiles";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 import { useBettingData } from "../context/bettingDataContext";
 import { useNavigate } from "react-router-dom";
+import { FormDownloadBets } from "../components/form/FormDownloadBets";
 
 export function PageForm() {
     const [step, setStep] = useState(1);
@@ -17,9 +18,10 @@ export function PageForm() {
 
     return (
         <div className='w-full h-full bg-slate-950 flex items-center justify-center'>
-            <div className='w-1/2 h-72 bg-indigo-900 rounded-xl flex flex-col justify-between p-5'>
+            <div className='w-1/2 bg-indigo-900 rounded-xl flex flex-col justify-between p-5'>
                 {step === 1 && <FormDownloadFiles />}
-                {step === 2 && <FormUploadFiles />}
+                {step === 2 && <FormDownloadBets />}
+                {step === 3 && <FormUploadFiles />}
 
 
                 <div className="flex items-center justify-between">
@@ -27,8 +29,8 @@ export function PageForm() {
                         color="warning"
                         className="w-16"
                         onClick={() => {
-                            if (step === 2) {
-                                setStep(1);
+                            if (step > 1) {
+                                setStep(step - 1);
                             }
                         }}
                         disabled={step === 1}
@@ -39,21 +41,19 @@ export function PageForm() {
                         color="warning"
                         className="w-1/4"
                         onClick={() => {
-                            if (step === 1) {
-                                setStep(2);
-                            } else if (step === 2) {
+                            if (step < 3) {
+                                setStep(step + 1);
+                            } else if (step === 3) {
                                 navigate("/stats");
                             }
                         }}
-                        disabled={step === 2 && (withdrawals.length == 0 || deposits.length == 0)}
+                        disabled={step === 3 && (withdrawals.length == 0 || deposits.length == 0)}
                     >
-                        {step == 1 ? "Next step" : "Show stats"}
+                        {step < 3 ? "Next step" : "Show stats"}
                         <HiOutlineArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                 </div>
             </div>
-
-
         </div>
     );
 }

@@ -1,8 +1,9 @@
-import { Deposit, Withdrawal } from "../types";
+import { Bet, Deposit, Withdrawal } from "../types";
 import { subMonths, subDays, isAfter, isBefore, isSameMonth } from 'date-fns';
 
 export const parseDate = (dateString: string): Date => new Date(dateString);
 
+// Calculate the total profit change in the last month
 export function calculateTotalProfitChangeLastMonth(deposits: Deposit[], withdrawals: Withdrawal[]): number {
     // Get the current date and the previous months
     const currentDate = new Date();
@@ -33,6 +34,7 @@ export function calculateTotalProfitChangeLastMonth(deposits: Deposit[], withdra
     return profitChangeLastMonth;
 }
 
+// Calculate the total profit change in the last 7 days
 export function calculateTotalProfitChangeLast7Days(deposits: Deposit[], withdrawals: Withdrawal[]): number {
     // Get the current date and the dates for the last 7 days and the 7 days before that
     const currentDate = new Date();
@@ -61,4 +63,65 @@ export function calculateTotalProfitChangeLast7Days(deposits: Deposit[], withdra
     const profitChangeLast7Days = profitLast7Days - profitPrevious7Days;
 
     return profitChangeLast7Days;
+}
+
+//determine the three most played games from the bets and how many times they were played
+export function determineMostPlayedGames(bets: Bet[]): { game: string, count: number }[] {
+    const gamesPlayed: { [key: string]: number } = {};
+
+    bets.forEach(bet => {
+        if (!bet.gameNameDisplay) {
+            return;
+        }
+        if (!gamesPlayed[bet.gameNameDisplay]) {
+            gamesPlayed[bet.gameNameDisplay] = 1;
+        } else {
+            gamesPlayed[bet.gameNameDisplay]++;
+        }
+    });
+
+    const sortedGames = Object.keys(gamesPlayed).sort((a, b) => gamesPlayed[b] - gamesPlayed[a]);
+
+    return sortedGames.map(game => ({ game, count: gamesPlayed[game] }));
+}
+
+export function determineMostPlayedCategories(bets: Bet[]): { category: string, count: number }[] {
+    const categoriesPlayed: { [key: string]: number } = {};
+
+    bets.forEach(bet => {
+        if (!bet.category) {
+            return;
+        }
+        if (!categoriesPlayed[bet.category]) {
+            categoriesPlayed[bet.category] = 1;
+        } else {
+            categoriesPlayed[bet.category]++;
+        }
+    });
+
+    const sortedCategories = Object.keys(categoriesPlayed).sort((a, b) => categoriesPlayed[b] - categoriesPlayed[a]);
+
+    return sortedCategories.map(category => ({ category, count: categoriesPlayed[category] }));
+}
+
+export function determineMostPlayedProviders(bets: Bet[]): { provider: string, count: number }[] {
+    const providersPlayed: { [key: string]: number } = {};
+
+    bets.forEach(bet => {
+        if (!bet.gameIdentifier) {
+            return;
+        }
+
+        const provider = bet.gameIdentifier.split(':')[0];
+
+        if (!providersPlayed[provider]) {
+            providersPlayed[provider] = 1;
+        } else {
+            providersPlayed[provider]++;
+        }
+    });
+
+    const sortedProviders = Object.keys(providersPlayed).sort((a, b) => providersPlayed[b] - providersPlayed[a]);
+
+    return sortedProviders.map(provider => ({ provider, count: providersPlayed[provider] }));
 }

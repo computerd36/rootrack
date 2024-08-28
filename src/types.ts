@@ -52,6 +52,21 @@ export interface Withdrawal {
     transactionId: string;
 }
 
+// Bets
+export interface Bet {
+    betAmount: number;
+    currency: string;
+    balanceType: string;
+    gameNameDisplay?: string; // Optional
+    gameIdentifier: string;
+    mult: number;
+    timestamp: string;
+    won: boolean;
+    profit: number;
+    category?: string; // Optional
+}
+
+
 // Stats
 export interface Stats {
     totalDeposits: number;
@@ -67,5 +82,17 @@ export interface Stats {
 
     biggestDeposit: Deposit;
     biggestWithdrawal: Withdrawal;
+
+    wagered: number;
+    totalBets: number;
+
+    biggestWin: Bet;
+    biggestMultiplier: Bet;
+    biggestLoss: Bet;
+
+    playedGames: { game: string, count: number }[];
+    playedCategories: { category: string, count: number }[];
+    playedProviders: { provider: string, count: number }[];
+
 }
 

@@ -1,4 +1,4 @@
-import { Deposit, Withdrawal } from "../types";
+import { Bet, Deposit, Withdrawal } from "../types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isValidDeposit(deposit: any): deposit is Deposit {
@@ -51,4 +51,40 @@ export function isValidWithdrawal(withdraw: any): withdraw is Withdrawal {
         typeof withdraw.__v === 'number' &&
         typeof withdraw.transactionId === 'string'
     );
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isValidBet(bet: any): bet is Bet {
+    if (typeof bet !== 'object' || bet === null) {
+        console.log("Bet is not an object or is null", bet);
+        return false;
+    }
+
+    const isValid = (
+        typeof bet.betAmount === 'number' &&
+        typeof bet.currency === 'string' &&
+        typeof bet.balanceType === 'string' &&
+        (typeof bet.gameNameDisplay === 'string' || bet.gameNameDisplay === undefined) && // Optional check
+        typeof bet.mult === 'number' &&
+        typeof bet.timestamp === 'string' &&
+        typeof bet.won === 'boolean' &&
+        typeof bet.profit === 'number' &&
+        (typeof bet.category === 'string' || bet.category === undefined) // Optional check
+    );
+
+    if (!isValid) {
+        console.log("Invalid Bet Structure:", {
+            betAmount: typeof bet.betAmount,
+            currency: typeof bet.currency,
+            balanceType: typeof bet.balanceType,
+            gameNameDisplay: typeof bet.gameNameDisplay,
+            mult: typeof bet.mult,
+            timestamp: typeof bet.timestamp,
+            won: typeof bet.won,
+            profit: typeof bet.profit,
+            category: typeof bet.category
+        });
+    }
+
+    return isValid;
 }
