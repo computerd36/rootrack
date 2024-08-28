@@ -10,9 +10,9 @@ export interface IStatsCardProps {
 
 export function StatsCard(props: IStatsCardProps) {
     return (
-        <Card className="bg-indigo-900 w-80">
+        <Card className="bg-indigo-900 grow">
             <p className='flex items-center gap-1 text-indigo-300'>{props.icon} {props.title}</p>
-            <h3 className='text-5xl text-indigo-100 font-bold'>{props.value.toFixed(2)} $</h3>
+            <h3 className='sm:text-xl md:text-3xl 2xl:text-5xl text-indigo-100 font-bold'>{props.value.toFixed(2)} $</h3>
             <p className='text-indigo-200'>{props.description}</p>
         </Card>
     );

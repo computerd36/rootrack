@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { LoadingPage } from '../components/LoadingPage';
 import { StatsCard } from '../components/stats/StatsCard';
 import { FaDollarSign } from 'react-icons/fa';
+import { ProfitLineChart } from '../components/stats/charts/ProfitLineChart';
 
 
 export function PageStats() {
@@ -64,25 +65,32 @@ export function PageStats() {
 
 
     return (
-        <div className='w-full h-full bg-slate-950 flex items-center justify-center gap-3'>
-            <StatsCard
-                title='Deposits'
-                icon={<PiHandDepositBold />}
-                value={stats!.totalDepositsValue}
-                description={"in " + stats!.totalDeposits + " deposits"}
-            />
-            <StatsCard
-                title='Profit'
-                icon={<FaDollarSign />}
-                value={stats!.totalProfit}
-                description={stats!.totalProfitChangeLast7Days.toFixed(1) + " $ in the last 7 days"}
-            />
-            <StatsCard
-                title='Withdrawals'
-                icon={<PiHandWithdrawBold />}
-                value={stats!.totalWithdrawalsValue}
-                description={"in " + stats!.totalWithdrawals + " withdrawals"}
-            />
+        <div className='w-full min-h-[100dvh] bg-slate-950 min-h-[100dvh] px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10'>
+
+            <div className='flex flex-col gap-7 items-center'>
+                <h1 className='text-3xl text-white'>Your current Roobet stats</h1>
+                <div className='flex w-full gap-7 max-w-7xl justify-between'>
+                    <StatsCard
+                        title='Deposits'
+                        icon={<PiHandDepositBold />}
+                        value={stats!.totalDepositsValue}
+                        description={"in " + stats!.totalDeposits + " deposits"}
+                    />
+                    <StatsCard
+                        title='Profit'
+                        icon={<FaDollarSign />}
+                        value={stats!.totalProfit}
+                        description={stats!.totalProfitChangeLast7Days.toFixed(1) + " $ in the last 7 days"}
+                    />
+                    <StatsCard
+                        title='Withdrawals'
+                        icon={<PiHandWithdrawBold />}
+                        value={stats!.totalWithdrawalsValue}
+                        description={"in " + stats!.totalWithdrawals + " withdrawals"}
+                    />
+                </div>
+                <ProfitLineChart />
+            </div>
         </div>
     );
 }
