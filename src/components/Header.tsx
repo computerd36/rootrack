@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Header() {
     const navigate = useNavigate();
     return (
-        <MegaMenu className='bg-indigo-950'>
+        <MegaMenu className='bg-indigo-950 border-b-2'>
             <div className="mx-auto flex w-full flex-wrap items-center justify-between p-4 md:space-x-8">
                 <NavbarBrand href="/">
                     <img alt="" src="/favicon.svg" className="mr-3 h-6 sm:h-9" />
