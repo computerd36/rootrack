@@ -14,8 +14,9 @@ export function PageStart() {
             {/* Grid container to hold both the text and the Dice */}
             <div className='flex w-full grow overflow-hidden'>
                 {/* Text content positioned in the center and over Dice */}
-                <div className='z-10 lg:w-1/3 md:w-1/2 px-10 min-w-24 text-left flex flex-col justify-center gap-5 bg-indigo-950'>
-                    <h1 className='text-yellow-300 text-6xl'>Stay in Control of Your Betting Activity</h1>
+                <div className='z-10 lg:w-1/3 md:w-1/2 px-10 min-w-24 text-left flex flex-col justify-center gap-2 bg-indigo-950'>
+                    <h1 className='text-yellow-300 text-6xl'>See the dice from all sides</h1>
+                    <h1 className='text-yellow-300 text-xl'>Stay in Control of Your Betting Activity</h1>
                     <p className='text-white mb-3'>The ultimate tool for tracking your profits, losses, and trends. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.</p>
                     <div className='flex gap-3 justify-end'>
                         <Button
@@ -23,7 +24,7 @@ export function PageStart() {
                             onClick={() => {
                                 navigate('/form')
                             }}
-                            className='text-slate-950'
+                            className='text-white font-black'
                         >
                             Start process
                             <HiOutlineArrowRight className="ml-2 h-5 w-5" />

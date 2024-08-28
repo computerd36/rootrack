@@ -25,7 +25,7 @@ export default function Header() {
                         onClick={() => {
                             navigate('/form')
                         }}
-                        className='text-indigo-950'
+                        className='text-white font-black'
                     >
                         Start process
                         <HiOutlineArrowRight className="ml-2 h-5 w-5" />
