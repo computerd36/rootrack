@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, TooltipProps, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { useBettingData } from '../../../context/bettingDataContext';
 import { format, parseISO } from 'date-fns';
 import { FaChartLine } from 'react-icons/fa';
 import { Card } from 'flowbite-react';
+import ColorizedAmount from '../ColorizedAmount';
 
 interface ProfitDataPoint {
     date: string;
@@ -63,16 +64,30 @@ export function ProfitLineChart() {
             <ResponsiveContainer width="100%" height={400}>
                 <LineChart
                     data={profitData}
-                    margin={{ right: 30, left: 20}}
-                    
+                    margin={{ right: 30, left: 20 }}
                 >
-                    <XAxis stroke='#e5edff' dataKey="date" tickFormatter={(tick) => format(parseISO(tick), 'dd.MM')} />
-                    <YAxis stroke='#e5edff' tickFormatter={(tick) => `${tick} $`} />
+                    <XAxis stroke='#e5edff' dataKey="date" tickFormatter={(tick) => format(parseISO(tick), 'MM-dd')} />
+                    <YAxis stroke='#e5edff' tickFormatter={(tick) => `$${tick}`} />
                     <ReferenceLine y={0} stroke="red" strokeDasharray="3 3" />
-                    <Tooltip />
+                    <Tooltip content={CustomTooltip} />
+
                     <Line type="monotone" dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </Card>
     );
 }
+
+
+
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="backdrop-blur-sm bg-white/10 px-3 py-2 rounded-xl text-white">
+                <p className="label">{label} <ColorizedAmount>{payload[0].value!.toFixed(2)}</ColorizedAmount></p>
+            </div>
+        );
+    }
+    return null;
+};

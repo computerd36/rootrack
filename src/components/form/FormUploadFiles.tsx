@@ -194,20 +194,20 @@ export function FormUploadFiles() {
         <React.Fragment>
             <div className='flex flex-col justify-between h-full gap-3 mb-5'>
                 <div>
-                    <h2 className='text-white text-2xl text-center font-bold'>Select your files from Roobet</h2>
-                    <h3 className='text-indigo-300 text-sm text-center mt-0'>All calculations and statistics are processed locally on your computer, ensuring no files are sent to external servers.</h3>
+                    <h2 className='text-white text-2xl text-left font-bold'>Select your files from Roobet</h2>
+                    <h3 className='text-indigo-300 text-sm text-left mt-0 flex items-center gap-1'>All calculations and statistics are processed locally on your computer, no files are sent to external servers.</h3>
                 </div>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-white text-xl font-bold flex items-center gap-2'>{withdrawalsFile ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Withdrawals</h2>
-                    <FileInput id="file-upload-withdrawals" className='w-3/4' accept='.json' onChange={onFileChangeWithdrawals} disabled={withdrawalsDisabled} />
+                    <FileInput id="file-upload-withdrawals" className='w-1/2 sm:w-2/3 md:w-3/4' accept='.json' onChange={onFileChangeWithdrawals} disabled={withdrawalsDisabled} />
                 </div>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-white text-xl font-bold flex items-center gap-2'>{depositsFile ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Deposits</h2>
-                    <FileInput id="file-upload-deposits" className='w-3/4' accept='.json' onChange={onFileChangeDeposits} disabled={depositsDisabled} />
+                    <FileInput id="file-upload-deposits" className='w-1/2 sm:w-2/3 md:w-3/4' accept='.json' onChange={onFileChangeDeposits} disabled={depositsDisabled} />
                 </div>
                 <div className='flex items-center justify-between'>
                     <h2 className='text-white text-xl font-bold flex items-center gap-2'>{betsFile ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Bets</h2>
-                    <FileInput id="file-upload-bets" className='w-3/4' accept='.json' onChange={onFileChangeBets} disabled={betsDisabled} />
+                    <FileInput id="file-upload-bets" className=' w-1/2 sm:w-2/3 md:w-3/4' accept='.json' onChange={onFileChangeBets} disabled={betsDisabled} />
                 </div>
             </div>
         </React.Fragment >

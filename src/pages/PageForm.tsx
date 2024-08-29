@@ -18,7 +18,7 @@ export function PageForm() {
 
     return (
         <div className='w-full h-full bg-slate-950 flex items-center justify-center'>
-            <div className='w-1/2 bg-indigo-900 rounded-xl flex flex-col justify-between p-5'>
+            <div className='xl:w-1/2 md:w-full max-w-[800px] bg-indigo-900 rounded-xl flex flex-col justify-between p-5 m-5'>
                 {step === 1 && <FormDownloadFiles />}
                 {step === 2 && <FormDownloadBets />}
                 {step === 3 && <FormUploadFiles />}

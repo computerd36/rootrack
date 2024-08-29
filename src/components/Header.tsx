@@ -33,9 +33,9 @@ export default function Header() {
                 </div>
                 <NavbarToggle />
                 <NavbarCollapse>
-                    <NavbarLink href="#" className='text-white'>About</NavbarLink>
-                    <NavbarLink href="#" className='text-white'>FAQ</NavbarLink>
-                    <NavbarLink href="#" className='text-white'>Discord</NavbarLink>
+                    <NavbarLink href="/faq" className='text-white'>FAQ</NavbarLink>
+                    <NavbarLink href="https://github.com/computerd36/rootrack" target='blank' className='text-white'>Repository</NavbarLink>
+                    <NavbarLink href="mailto:mail@36it.de" target='blank' className='text-white'>Contact</NavbarLink>
                 </NavbarCollapse>
             </div>
         </MegaMenu>

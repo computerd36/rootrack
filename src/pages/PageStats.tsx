@@ -1,7 +1,7 @@
 import { useBettingData } from '../context/bettingDataContext';
 import { useNavigate } from 'react-router-dom';
 import { Stats } from '../types';
-import { calculateTotalProfitChangeLastMonth, calculateTotalProfitChangeLast7Days, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders } from '../util/statsCalculations';
+import { calculateTotalProfitChangeLastMonth, calculateTotalProfitChangeLast7Days, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders, determineBetsPerWeekday } from '../util/statsCalculations';
 import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
 import { useEffect, useState } from 'react';
 import { LoadingPage } from '../components/LoadingPage';
@@ -11,6 +11,10 @@ import { ProfitLineChart } from '../components/stats/charts/ProfitLineChart';
 import { FaMoneyBillTransfer } from 'react-icons/fa6';
 import { StatsMostPlayedCard } from '../components/stats/StatsMostPlayedCard';
 import { StatsAdCard } from '../components/stats/StatsAdCard';
+import ColorizedAmount from '../components/stats/ColorizedAmount';
+import { GamePieChart } from '../components/stats/charts/GamesPieChart';
+import { TbMultiplier2X } from 'react-icons/tb';
+import MostBetsDayBarChart from '../components/stats/charts/MostBetsDayBarChart';
 
 
 export function PageStats() {
@@ -76,6 +80,9 @@ export function PageStats() {
 
                 // Most played providers
                 playedProviders: determineMostPlayedProviders(bets),
+
+                // Bets per weekday
+                betsPerWeekday: determineBetsPerWeekday(bets),
             });
             setIsLoading(false);
         } else {
@@ -86,16 +93,16 @@ export function PageStats() {
 
     if (isLoading || !stats) {
         return (
-            <LoadingPage />
+            <LoadingPage text='Calculating statistics' />
         );
     }
 
 
     return (
-        <div className='w-full min-h-[100dvh] bg-slate-950 min-h-[100dvh] px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10'>
-            <div className='flex flex-col gap-7 items-center'>
+        <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10'>
+            <div className='flex flex-col gap-5 items-center'>
                 <h1 className='text-3xl text-white'>Your current Roobet stats</h1>
-                <div className='flex w-full gap-7 max-w-7xl justify-between'>
+                <div className='flex w-full gap-5 max-w-7xl justify-between flex-col sm:flex-col md:flex-row'>
                     <StatsMoneyCard
                         title='Deposits'
                         icon={<PiHandDepositBold />}
@@ -106,7 +113,12 @@ export function PageStats() {
                         title='Profit'
                         icon={<FaDollarSign />}
                         value={stats!.totalProfit}
-                        description={stats!.totalProfitChangeLast7Days.toFixed(1) + " $ in the last 7 days"}
+                        description={
+                            <>
+                                <ColorizedAmount>{stats.totalProfitChangeLast7Days.toFixed(2)}</ColorizedAmount>
+                                {" in the last 7 days"}
+                            </>
+                        } isProfit
                     />
                     <StatsMoneyCard
                         title='Withdrawals'
@@ -121,14 +133,36 @@ export function PageStats() {
                     mostPlayedCategories={stats!.playedCategories.slice(0, 3)}
                     mostPlayedProviders={stats!.playedProviders.slice(0, 3)}
                 />
-                <div className='w-full gap-7 grid grid-cols-2'>
-                    <StatsAdCard />
-                    <StatsMoneyCard
+                <div className='w-full gap-5 grid sm:grid-cols-2 md:grid-cols-3 '>
+                    <div className='row-span-1 col-span-2 md:col-span-1 '><StatsAdCard /></div>
+                    <div className='row-span-3 col-span-2 w-full h-full'><GamePieChart games={stats.playedGames} /></div>
+                    <div className='row-span-1 col-span-2 md:col-span-1'><StatsMoneyCard
                         title='Wagered'
                         icon={<FaMoneyBillTransfer />}
                         value={stats!.wagered}
                         description={"in " + stats!.totalBets + " bets"}
-                    />
+                    /></div>
+                    <div className='row-span-2 col-span-2 md:col-span-1'>
+                        <MostBetsDayBarChart data={stats!.betsPerWeekday} />
+                    </div>
+                    <div className='row-span-1 col-span-2 md:col-span-1'>
+                        <StatsMoneyCard
+                            title='Biggest win'
+                            icon={<FaDollarSign />}
+                            value={stats!.biggestWin.profit}
+                            description={"with $" + stats!.biggestWin.betAmount + " stake in " + stats!.biggestWin.gameNameDisplay}
+                            isProfit
+                        />
+                    </div>
+                    <div className='row-span-1 col-span-2 md:col-span-1'>
+                        <StatsMoneyCard
+                            title='Biggest multiplier'
+                            icon={<TbMultiplier2X />}
+                            value={stats!.biggestMultiplier.mult}
+                            description={"with $" + stats!.biggestLoss.betAmount + " stake in " + stats!.biggestLoss.gameNameDisplay}
+                            isMultiplier
+                        />
+                    </div>
                 </div>
             </div>
         </div>

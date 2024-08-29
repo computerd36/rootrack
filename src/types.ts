@@ -94,5 +94,7 @@ export interface Stats {
     playedCategories: { category: string, count: number }[];
     playedProviders: { provider: string, count: number }[];
 
+    betsPerWeekday: { weekday: string, count: number }[];
+
 }
 

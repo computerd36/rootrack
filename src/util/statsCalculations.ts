@@ -69,14 +69,18 @@ export function calculateTotalProfitChangeLast7Days(deposits: Deposit[], withdra
 export function determineMostPlayedGames(bets: Bet[]): { game: string, count: number }[] {
     const gamesPlayed: { [key: string]: number } = {};
 
+
     bets.forEach(bet => {
-        if (!bet.gameNameDisplay) {
+        if (!bet.gameIdentifier) {
             return;
         }
-        if (!gamesPlayed[bet.gameNameDisplay]) {
-            gamesPlayed[bet.gameNameDisplay] = 1;
+
+        const game = bet.gameNameDisplay || bet.gameIdentifier.split(':')[1].charAt(0).toUpperCase() + bet.gameIdentifier.split(':')[1].slice(1);
+
+        if (!gamesPlayed[game]) {
+            gamesPlayed[game] = 1;
         } else {
-            gamesPlayed[bet.gameNameDisplay]++;
+            gamesPlayed[game]++;
         }
     });
 
@@ -124,4 +128,26 @@ export function determineMostPlayedProviders(bets: Bet[]): { provider: string, c
     const sortedProviders = Object.keys(providersPlayed).sort((a, b) => providersPlayed[b] - providersPlayed[a]);
 
     return sortedProviders.map(provider => ({ provider, count: providersPlayed[provider] }));
+}
+
+export function determineBetsPerWeekday(bets: Bet[]): { weekday: string, count: number }[] {
+    const weekdays: { [key: string]: number } = {
+        Sunday: 0,
+        Monday: 0,
+        Tuesday: 0,
+        Wednesday: 0,
+        Thursday: 0,
+        Friday: 0,
+        Saturday: 0,
+    };
+
+    bets.forEach(bet => {
+        const date = new Date(bet.timestamp);
+        const weekday = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+        weekdays[weekday]++;
+    });
+
+    // Shorten the weekday name to 3 letters and return the data unsorted
+    return Object.keys(weekdays).map(weekday => ({ weekday: weekday.slice(0, 2), count: weekdays[weekday] }));
 }

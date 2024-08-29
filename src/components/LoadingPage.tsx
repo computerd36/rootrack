@@ -1,10 +1,14 @@
 import { Spinner } from "flowbite-react";
 
-export function LoadingPage() {
+interface LoadingPageProps {
+    text?: string;
+}
+
+export function LoadingPage(props: LoadingPageProps) {
     return (
-        <div className='w-full h-full bg-slate-950 flex flex-col items-center justify-center gap-2'>
+        <div className='w-full h-full flex flex-col items-center justify-center gap-2'>
             <Spinner color="warning" aria-label="Loading spinner" size="xl" />
-            <span className="text-white text-sm">Calculating statistics</span>
+            {props.text && <span className="text-white text-sm">{props.text}</span>}
         </div>
     );
 }
