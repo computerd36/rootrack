@@ -7,7 +7,7 @@ interface DiceProps {
 export default function Dice(props: DiceProps) {
     return (
         <div className='w-full h-full'>
-            <Spline scene="https://prod.spline.design/wNx6OomCZthbjBAE/scene.splinecode" onLoadCapture={(progress) => {console.log(progress)}} onLoad={() => props.setIsLoadingDice(false)}  />
+            <Spline scene="https://prod.spline.design/wNx6OomCZthbjBAE/scene.splinecode" onLoadCapture={(progress) => {console.log(progress)}} onLoad={() => props.setIsLoadingDice(false)} className='md:py-32'  />
         </div>
     );
 }

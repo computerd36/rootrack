@@ -6,14 +6,13 @@ import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
 import { useEffect, useState } from 'react';
 import { LoadingPage } from '../components/LoadingPage';
 import { StatsMoneyCard } from '../components/stats/StatsMoneyCard';
-import { FaDollarSign } from 'react-icons/fa';
+import { FaDollarSign, FaTimes } from 'react-icons/fa';
 import { ProfitLineChart } from '../components/stats/charts/ProfitLineChart';
 import { FaMoneyBillTransfer } from 'react-icons/fa6';
 import { StatsMostPlayedCard } from '../components/stats/StatsMostPlayedCard';
 import { StatsAdCard } from '../components/stats/StatsAdCard';
 import ColorizedAmount from '../components/stats/ColorizedAmount';
 import { GamePieChart } from '../components/stats/charts/GamesPieChart';
-import { TbMultiplier2X } from 'react-icons/tb';
 import MostBetsDayBarChart from '../components/stats/charts/MostBetsDayBarChart';
 import { getGameName } from '../util/gameName';
 
@@ -158,7 +157,7 @@ export function PageStats() {
                     <div className='row-span-1 col-span-2 md:col-span-1'>
                         <StatsMoneyCard
                             title='Biggest multiplier'
-                            icon={<TbMultiplier2X />}
+                            icon={<FaTimes />}
                             value={stats.biggestMultiplier.mult}
                             description={`Earned $${stats.biggestMultiplier.profit.toFixed(2)} from a $${stats.biggestMultiplier.betAmount} bet in ${getGameName(stats.biggestMultiplier)}`}
                             isMultiplier

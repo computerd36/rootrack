@@ -18,7 +18,7 @@ export function PageStart() {
             {/* Grid container to hold both the text and the Dice */}
             <div className='flex w-full grow overflow-hidden'>
                 {/* Text content positioned in the center and over Dice */}
-                <div className='z-10 xl:w-1/3 md:w-1/2 sm:w-full px-10 min-w-24 text-left flex flex-col justify-center gap-2 bg-indigo-950'>
+                <div className='z-10 xl:w-1/3 md:w-1/2 sm:w-full pl-16 sm:pr-16 md:pr-0 md-pr-0 min-w-24 text-left flex flex-col justify-center gap-2 bg-indigo-950'>
                     <h1 className='text-yellow-300 text-5xl font-semibold'>View Every Angle of the Dice</h1>
                     <h1 className='text-yellow-300 text-xl'>Stay in Control of Your Betting Activity</h1>
                     <p className='text-white mb-3'>The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.</p>
@@ -35,7 +35,7 @@ export function PageStart() {
                         </Button>
                     </div>
                 </div>
-                <div className='h-full xl:w-2/3 md:w-1/2 sm:w-0 bg-gradient-to-r from-indigo-950 to-indigo-750'>
+                <div className='h-full xl:w-2/3 md:w-1/2 sm:w-0 bg-gradient-to-r from-indigo-950 to-indigo-750 z-10'>
                     {isLoadingDice && <LoadingPage />}
                     <Dice setIsLoadingDice={setIsLoadingDice} />
 
