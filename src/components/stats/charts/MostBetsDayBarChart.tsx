@@ -7,7 +7,7 @@ interface MostBetsDayBarChartProps {
     data: { weekday: string, count: number }[];
 }
 
-export default function MostBetsDayBarChart(props: MostBetsDayBarChartProps) {
+export default function MostBetsDayBarChart(props: Readonly<MostBetsDayBarChartProps>) {
 
 
     return (
@@ -17,7 +17,7 @@ export default function MostBetsDayBarChart(props: MostBetsDayBarChartProps) {
                 <BarChart width={150} height={40} data={props.data}>
                     <Bar dataKey="count" fill="#8884d8" />
                     <Tooltip content={CustomTooltip} cursor={{ display: "none" }} />
-                    <XAxis dataKey="weekday" />
+                    <XAxis dataKey="weekday" stroke="#E0E7FF" />
                 </BarChart>
             </ResponsiveContainer>
         </Card>

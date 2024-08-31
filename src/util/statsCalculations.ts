@@ -1,5 +1,6 @@
 import { Bet, Deposit, Withdrawal } from "../types";
 import { subMonths, subDays, isAfter, isBefore, isSameMonth } from 'date-fns';
+import { getGameName } from "./gameName";
 
 export const parseDate = (dateString: string): Date => new Date(dateString);
 
@@ -75,7 +76,7 @@ export function determineMostPlayedGames(bets: Bet[]): { game: string, count: nu
             return;
         }
 
-        const game = bet.gameNameDisplay || bet.gameIdentifier.split(':')[1].charAt(0).toUpperCase() + bet.gameIdentifier.split(':')[1].slice(1);
+        const game = getGameName(bet);
 
         if (!gamesPlayed[game]) {
             gamesPlayed[game] = 1;

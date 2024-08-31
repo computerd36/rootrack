@@ -1,10 +1,15 @@
 import { Card } from 'flowbite-react';
+import { FaGift } from 'react-icons/fa';
 
 export function StatsAdCard() {
+    const handleClick = () => {
+        window.open('https://roobet.com/?ref=cd36', '_blank');
+    }
+
     return (
-        <Card className="bg-indigo-900 w-full hover:bg-indigo-800" href='https://roobet.com/?ref=cd36'>
-            <h1 className='md:text-xl sm:text-sm text-white font-semibold leading-loose'>USE PROMO CODE <span className='font-bold text-yellow-400 underline'>cd36</span> ON ROOBET TO SUPPORT THE DEVELOPMENT OF THIS PROJECT</h1>
-            {/* <Button href="https://roobet.com/?ref=cd36" target='blank' color={"warning"}>Open Roobet</Button> */}
+        <Card className="bg-indigo-900 w-full hover:bg-indigo-800" onClick={handleClick}>
+            <h2 className='mb-0 text-2xl font-bold tracking-tight text-indigo-300 flex items-center gap-2'><FaGift /> Support and earn</h2>
+            <p className='font-normal text-indigo-100'> Click here to use our bonus code on Roobet to support the development of the project.</p>
         </Card>
     );
 }

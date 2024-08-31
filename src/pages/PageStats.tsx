@@ -15,6 +15,7 @@ import ColorizedAmount from '../components/stats/ColorizedAmount';
 import { GamePieChart } from '../components/stats/charts/GamesPieChart';
 import { TbMultiplier2X } from 'react-icons/tb';
 import MostBetsDayBarChart from '../components/stats/charts/MostBetsDayBarChart';
+import { getGameName } from '../util/gameName';
 
 
 export function PageStats() {
@@ -99,20 +100,20 @@ export function PageStats() {
 
 
     return (
-        <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10'>
-            <div className='flex flex-col gap-5 items-center'>
+        <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
+            <div className='flex flex-col gap-5 items-center max-w-[1250px]'>
                 <h1 className='text-3xl text-white'>Your current Roobet stats</h1>
                 <div className='flex w-full gap-5 max-w-7xl justify-between flex-col sm:flex-col md:flex-row'>
                     <StatsMoneyCard
                         title='Deposits'
                         icon={<PiHandDepositBold />}
-                        value={stats!.totalDepositsValue}
-                        description={"in " + stats!.totalDeposits + " deposits"}
+                        value={stats.totalDepositsValue}
+                        description={"in " + stats.totalDeposits + " deposits"}
                     />
                     <StatsMoneyCard
                         title='Profit'
                         icon={<FaDollarSign />}
-                        value={stats!.totalProfit}
+                        value={stats.totalProfit}
                         description={
                             <>
                                 <ColorizedAmount>{stats.totalProfitChangeLast7Days.toFixed(2)}</ColorizedAmount>
@@ -123,34 +124,34 @@ export function PageStats() {
                     <StatsMoneyCard
                         title='Withdrawals'
                         icon={<PiHandWithdrawBold />}
-                        value={stats!.totalWithdrawalsValue}
-                        description={"in " + stats!.totalWithdrawals + " withdrawals"}
+                        value={stats.totalWithdrawalsValue}
+                        description={"in " + stats.totalWithdrawals + " withdrawals"}
                     />
                 </div>
                 <ProfitLineChart />
                 <StatsMostPlayedCard
-                    mostPlayedGames={stats!.playedGames.slice(0, 3)}
-                    mostPlayedCategories={stats!.playedCategories.slice(0, 3)}
-                    mostPlayedProviders={stats!.playedProviders.slice(0, 3)}
+                    mostPlayedGames={stats.playedGames.slice(0, 3)}
+                    mostPlayedCategories={stats.playedCategories.slice(0, 3)}
+                    mostPlayedProviders={stats.playedProviders.slice(0, 3)}
                 />
                 <div className='w-full gap-5 grid sm:grid-cols-2 md:grid-cols-3 '>
-                    <div className='row-span-1 col-span-2 md:col-span-1 '><StatsAdCard /></div>
-                    <div className='row-span-3 col-span-2 w-full h-full'><GamePieChart games={stats.playedGames} /></div>
                     <div className='row-span-1 col-span-2 md:col-span-1'><StatsMoneyCard
                         title='Wagered'
                         icon={<FaMoneyBillTransfer />}
-                        value={stats!.wagered}
-                        description={"in " + stats!.totalBets + " bets"}
+                        value={stats.wagered}
+                        description={"in " + stats.totalBets + " bets"}
                     /></div>
+                    <div className='row-span-3 col-span-2 w-full h-full'><GamePieChart games={stats.playedGames} /></div>
+                    <div className='row-span-1 col-span-2 md:col-span-1 '><StatsAdCard /></div>
                     <div className='row-span-2 col-span-2 md:col-span-1'>
-                        <MostBetsDayBarChart data={stats!.betsPerWeekday} />
+                        <MostBetsDayBarChart data={stats.betsPerWeekday} />
                     </div>
                     <div className='row-span-1 col-span-2 md:col-span-1'>
                         <StatsMoneyCard
                             title='Biggest win'
                             icon={<FaDollarSign />}
-                            value={stats!.biggestWin.profit}
-                            description={"with $" + stats!.biggestWin.betAmount + " stake in " + stats!.biggestWin.gameNameDisplay}
+                            value={stats.biggestWin.profit}
+                            description={`Won with a $${stats.biggestWin.betAmount} bet in ${getGameName(stats.biggestWin)}`}
                             isProfit
                         />
                     </div>
@@ -158,8 +159,8 @@ export function PageStats() {
                         <StatsMoneyCard
                             title='Biggest multiplier'
                             icon={<TbMultiplier2X />}
-                            value={stats!.biggestMultiplier.mult}
-                            description={"with $" + stats!.biggestLoss.betAmount + " stake in " + stats!.biggestLoss.gameNameDisplay}
+                            value={stats.biggestMultiplier.mult}
+                            description={`Earned $${stats.biggestMultiplier.profit.toFixed(2)} from a $${stats.biggestMultiplier.betAmount} bet in ${getGameName(stats.biggestMultiplier)}`}
                             isMultiplier
                         />
                     </div>

@@ -11,7 +11,7 @@ export interface IStatsMoneyCardProps {
     isMultiplier?: boolean;
 }
 
-export function StatsMoneyCard(props: IStatsMoneyCardProps) {
+export function StatsMoneyCard(props: Readonly<IStatsMoneyCardProps>) {
 
     if (!props.isMultiplier) {
 
@@ -21,7 +21,7 @@ export function StatsMoneyCard(props: IStatsMoneyCardProps) {
                     <p className='flex items-center gap-2 text-indigo-300'>{props.icon} {props.title}</p>
                     {props.isProfit ? <h3 className='sm:text-xl md:text-3xl 2xl:text-5xl text-indigo-100 font-bold'><ColorizedAmount>{props.value.toFixed(2)}</ColorizedAmount></h3> :
                         <h3 className='sm:text-xl md:text-3xl 2xl:text-5xl text-indigo-100 font-bold'>${props.value.toFixed(2)}</h3>}
-                    <p className='text-indigo-200'>{props.description}</p>
+                    <p className='text-indigo-200 text-sm'>{props.description}</p>
                 </div>
             </Card>
         );
@@ -31,7 +31,7 @@ export function StatsMoneyCard(props: IStatsMoneyCardProps) {
                 <div className='flex flex-col gap-4 justify-start h-full'>
                     <p className='flex items-center gap-2 text-indigo-300'>{props.icon} {props.title}</p>
                     <h3 className='sm:text-xl md:text-3xl 2xl:text-5xl text-indigo-100 font-bold'>{props.value.toFixed(2)}x</h3>
-                    <p className='text-indigo-200'>{props.description}</p>
+                    <p className='text-indigo-200 text-sm'>{props.description}</p>
                 </div>
             </Card>
         );
