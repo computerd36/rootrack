@@ -1,5 +1,5 @@
 import { Bet, Deposit, Withdrawal } from "../types";
-import { subMonths, subDays, isAfter, isBefore, isSameMonth } from 'date-fns';
+import { subMonths, subDays, isSameMonth, differenceInCalendarDays, parseISO, closestTo } from 'date-fns';
 import { getGameName } from "./gameName";
 
 export const parseDate = (dateString: string): Date => new Date(dateString);
@@ -36,34 +36,47 @@ export function calculateTotalProfitChangeLastMonth(deposits: Deposit[], withdra
 }
 
 // Calculate the total profit change in the last 7 days
-export function calculateTotalProfitChangeLast7Days(deposits: Deposit[], withdrawals: Withdrawal[]): number {
-    // Get the current date and the dates for the last 7 days and the 7 days before that
+export function calculateProfitChangeTodayComparedTo7DaysAgo(deposits: Deposit[], withdrawals: Withdrawal[]): number {
+    // Get today's date and the date 7 days ago
     const currentDate = new Date();
-    const sevenDaysAgo = subDays(currentDate, 7);
-    const fourteenDaysAgo = subDays(currentDate, 14);
+    const date7DaysAgo = subDays(currentDate, 7);
 
-    // Filter deposits and withdrawals for the last 7 days
-    const depositsLast7Days = deposits.filter(deposit => isAfter(parseDate(deposit.createdAt), sevenDaysAgo));
-    const withdrawalsLast7Days = withdrawals.filter(withdrawal => isAfter(parseDate(withdrawal.createdAt), sevenDaysAgo));
+    // Helper function to find the nearest transaction day before or on a specific date
+    function findNearestDate(transactions: { createdAt: string }[], targetDate: Date): Date | null | undefined {
+        const dates = transactions.map(t => parseISO(t.createdAt));
+        return dates.length > 0 ? closestTo(targetDate, dates) : null;
+    }
 
-    // Filter deposits and withdrawals for the 7 days before the last 7 days
-    const depositsPrevious7Days = deposits.filter(deposit => isAfter(parseDate(deposit.createdAt), fourteenDaysAgo) && isBefore(parseDate(deposit.createdAt), sevenDaysAgo));
-    const withdrawalsPrevious7Days = withdrawals.filter(withdrawal => isAfter(parseDate(withdrawal.createdAt), fourteenDaysAgo) && isBefore(parseDate(withdrawal.createdAt), sevenDaysAgo));
+    // Filter deposits and withdrawals for today
+    const depositsToday = deposits.filter(deposit => differenceInCalendarDays(currentDate, parseISO(deposit.createdAt)) === 0);
+    const withdrawalsToday = withdrawals.filter(withdrawal => differenceInCalendarDays(currentDate, parseISO(withdrawal.createdAt)) === 0);
 
-    // Calculate profit for the last 7 days
-    const totalDepositsLast7Days = depositsLast7Days.reduce((acc, deposit) => acc + deposit.amount, 0);
-    const totalWithdrawalsLast7Days = withdrawalsLast7Days.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
-    const profitLast7Days = totalWithdrawalsLast7Days - totalDepositsLast7Days;
+    // Find the nearest day with transactions before or on date7DaysAgo
+    const nearestDepositDate7DaysAgo = findNearestDate(deposits, date7DaysAgo);
+    const nearestWithdrawalDate7DaysAgo = findNearestDate(withdrawals, date7DaysAgo);
 
-    // Calculate profit for the 7 days before the last 7 days
-    const totalDepositsPrevious7Days = depositsPrevious7Days.reduce((acc, deposit) => acc + deposit.amount, 0);
-    const totalWithdrawalsPrevious7Days = withdrawalsPrevious7Days.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
-    const profitPrevious7Days = totalWithdrawalsPrevious7Days - totalDepositsPrevious7Days;
+    // Filter deposits and withdrawals for the nearest date 7 days ago
+    const deposits7DaysAgo = nearestDepositDate7DaysAgo
+        ? deposits.filter(deposit => differenceInCalendarDays(nearestDepositDate7DaysAgo, parseISO(deposit.createdAt)) === 0)
+        : [];
+    const withdrawals7DaysAgo = nearestWithdrawalDate7DaysAgo
+        ? withdrawals.filter(withdrawal => differenceInCalendarDays(nearestWithdrawalDate7DaysAgo, parseISO(withdrawal.createdAt)) === 0)
+        : [];
+
+    // Calculate profit for today
+    const totalDepositsToday = depositsToday.reduce((acc, deposit) => acc + deposit.amount, 0);
+    const totalWithdrawalsToday = withdrawalsToday.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
+    const profitToday = totalWithdrawalsToday - totalDepositsToday;
+
+    // Calculate profit for the nearest day 7 days ago
+    const totalDeposits7DaysAgo = deposits7DaysAgo.reduce((acc, deposit) => acc + deposit.amount, 0);
+    const totalWithdrawals7DaysAgo = withdrawals7DaysAgo.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
+    const profit7DaysAgo = totalWithdrawals7DaysAgo - totalDeposits7DaysAgo;
 
     // Return the profit change (amount, not percentage)
-    const profitChangeLast7Days = profitLast7Days - profitPrevious7Days;
+    const profitChangeTodayComparedTo7DaysAgo = profit7DaysAgo - profitToday;
 
-    return profitChangeLast7Days;
+    return profitChangeTodayComparedTo7DaysAgo;
 }
 
 //determine the three most played games from the bets and how many times they were played

@@ -1,20 +1,22 @@
 import { useBettingData } from '../context/bettingDataContext';
 import { useNavigate } from 'react-router-dom';
 import { Stats } from '../types';
-import { calculateTotalProfitChangeLastMonth, calculateTotalProfitChangeLast7Days, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders, determineBetsPerWeekday } from '../util/statsCalculations';
+import { calculateTotalProfitChangeLastMonth, calculateProfitChangeTodayComparedTo7DaysAgo, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders, determineBetsPerWeekday } from '../util/statsCalculations';
 import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LoadingPage } from '../components/LoadingPage';
 import { StatsMoneyCard } from '../components/stats/StatsMoneyCard';
 import { FaDollarSign, FaTimes } from 'react-icons/fa';
 import { ProfitLineChart } from '../components/stats/charts/ProfitLineChart';
-import { FaMoneyBillTransfer } from 'react-icons/fa6';
+import { FaDownload, FaMoneyBillTransfer } from 'react-icons/fa6';
 import { StatsMostPlayedCard } from '../components/stats/StatsMostPlayedCard';
 import { StatsAdCard } from '../components/stats/StatsAdCard';
 import ColorizedAmount from '../components/stats/ColorizedAmount';
 import { GamePieChart } from '../components/stats/charts/GamesPieChart';
 import MostBetsDayBarChart from '../components/stats/charts/MostBetsDayBarChart';
 import { getGameName } from '../util/gameName';
+import { toPng } from 'html-to-image';
+import { Button } from 'flowbite-react';
 
 
 export function PageStats() {
@@ -25,6 +27,7 @@ export function PageStats() {
 
     const [stats, setStats] = useState<Stats | null>(null);
 
+    const statsRef = useRef(null);
 
     useEffect(() => {
         if (withdrawals.length !== 0 && deposits.length !== 0 && bets.length !== 0) {
@@ -45,7 +48,7 @@ export function PageStats() {
                 totalProfitPercentage: ((withdrawals.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0) - deposits.reduce((acc, deposit) => acc + deposit.amount, 0)) / deposits.reduce((acc, deposit) => acc + deposit.amount, 0)) * 100,
 
                 // Calculating the change in profit from last week
-                totalProfitChangeLast7Days: calculateTotalProfitChangeLast7Days(deposits, withdrawals),
+                totalProfitChangeLast7Days: calculateProfitChangeTodayComparedTo7DaysAgo(deposits, withdrawals),
 
                 // Calculating the change in profit from last month
                 totalProfitChangeLastMonth: calculateTotalProfitChangeLastMonth(deposits, withdrawals),
@@ -97,11 +100,26 @@ export function PageStats() {
         );
     }
 
+    const htmlToImageConvert = () => {
+        if (statsRef.current) {
+            toPng(statsRef.current, { cacheBust: false })
+                .then((dataUrl) => {
+                    const link = document.createElement("a");
+                    link.download = "stats.png";
+                    link.href = dataUrl;
+                    link.click();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+
 
     return (
         <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
-            <div className='flex flex-col gap-5 items-center max-w-[1250px]'>
-                <h1 className='text-3xl text-white'>Your current Roobet stats</h1>
+            <div className='flex flex-col gap-5 items-center max-w-[1250px]' ref={statsRef}>
+                <h1 className='text-3xl text-white flex items-center justify-between w-full'><span>Your current Roobet stats</span> <Button onClick={htmlToImageConvert} color={"warning"}><div className='flex items-center justify-center gap-2'><FaDownload /> <span>Download stats</span></div></Button></h1>
                 <div className='flex w-full gap-5 max-w-7xl justify-between flex-col sm:flex-col md:flex-row'>
                     <StatsMoneyCard
                         title='Deposits'
