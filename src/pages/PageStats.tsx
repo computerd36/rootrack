@@ -121,15 +121,15 @@ export function PageStats() {
 
     return (
         <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
-            <div className='flex flex-col gap-5 items-center max-w-[1250px]' ref={statsRef}>
-                <h1 className='text-3xl text-white flex items-center justify-between w-full'>
+            <div className='flex flex-col gap-5 items-center max-w-[1250px] p-2 bg-slate-950 rounded-xl' ref={statsRef}>
+                <h1 className='text-3xl text-white flex items-center justify-between w-full h-16'>
                     <span>Your current Roobet stats</span>
-                    <Button onClick={htmlToImageConvert} color={"warning"} className={!isDownloadVisible ? '' : 'hidden'}>
+                    <Button onClick={htmlToImageConvert} color={"warning"} className={isDownloadVisible ? '' : 'hidden'}>
                         <div className='flex items-center justify-center gap-2'>
                             <FaDownload /> <span>Download stats</span>
                         </div>
                     </Button>
-                    <div className={`flex items-center justify-center gap-2 ${!isDownloadVisible ? 'hidden' : ''}`}>
+                    <div className={`flex items-center justify-center gap-2 ${isDownloadVisible ? 'hidden' : ''}`}>
                         <img src={RootrackLogo} alt='Rootrack logo' className='w-6 h-6' /> <span className='text-sm'>Stats calculated on rootrack.me</span>
                     </div>
                 </h1>
