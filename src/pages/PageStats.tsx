@@ -1,7 +1,7 @@
 import { useBettingData } from '../context/bettingDataContext';
 import { useNavigate } from 'react-router-dom';
 import { Stats } from '../types';
-import { calculateTotalProfitChangeLastMonth, calculateProfitChangeTodayComparedTo7DaysAgo, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders, determineBetsPerWeekday } from '../util/statsCalculations';
+import { calculateProfitChangeTodayComparedTo7DaysAgo, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders, determineBetsPerWeekday } from '../util/statsCalculations';
 import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
 import { useEffect, useRef, useState } from 'react';
 import { LoadingPage } from '../components/LoadingPage';
@@ -49,10 +49,6 @@ export function PageStats() {
 
                 // Calculating the change in profit from last week
                 totalProfitChangeLast7Days: calculateProfitChangeTodayComparedTo7DaysAgo(deposits, withdrawals),
-
-                // Calculating the change in profit from last month
-                totalProfitChangeLastMonth: calculateTotalProfitChangeLastMonth(deposits, withdrawals),
-
 
                 // Biggest deposit
                 biggestDeposit: deposits.reduce((biggest, deposit) => deposit.amount > biggest.amount ? deposit : biggest, deposits[0]),
@@ -105,7 +101,7 @@ export function PageStats() {
             toPng(statsRef.current, { cacheBust: false })
                 .then((dataUrl) => {
                     const link = document.createElement("a");
-                    link.download = "stats.png";
+                    link.download = "rootrack-stats.png";
                     link.href = dataUrl;
                     link.click();
                 })
@@ -119,16 +115,24 @@ export function PageStats() {
     return (
         <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
             <div className='flex flex-col gap-5 items-center max-w-[1250px]' ref={statsRef}>
-                <h1 className='text-3xl text-white flex items-center justify-between w-full'><span>Your current Roobet stats</span> <Button onClick={htmlToImageConvert} color={"warning"}><div className='flex items-center justify-center gap-2'><FaDownload /> <span>Download stats</span></div></Button></h1>
+                <h1 className='text-3xl text-white flex items-center justify-between w-full'>
+                    <span>Your current Roobet stats</span>
+                    <Button onClick={htmlToImageConvert} color={"warning"}>
+                        <div className='flex items-center justify-center gap-2'>
+                            <FaDownload /> <span>Download stats</span>
+                        </div>
+                    </Button>
+                </h1>
                 <div className='flex w-full gap-5 max-w-7xl justify-between flex-col sm:flex-col md:flex-row'>
                     <StatsMoneyCard
                         title='Deposits'
                         icon={<PiHandDepositBold />}
                         value={stats.totalDepositsValue}
                         description={"in " + stats.totalDeposits + " deposits"}
+                        explanation='The total value of all deposits you have made on Roobet'
                     />
                     <StatsMoneyCard
-                        title='Profit'
+                        title='Profits'
                         icon={<FaDollarSign />}
                         value={stats.totalProfit}
                         description={
@@ -136,13 +140,16 @@ export function PageStats() {
                                 <ColorizedAmount>{stats.totalProfitChangeLast7Days.toFixed(2)}</ColorizedAmount>
                                 {" in the last 7 days"}
                             </>
-                        } isProfit
+                        }
+                        isProfit
+                        explanation='The total profits you have paid out from Roobet'
                     />
                     <StatsMoneyCard
                         title='Withdrawals'
                         icon={<PiHandWithdrawBold />}
                         value={stats.totalWithdrawalsValue}
                         description={"in " + stats.totalWithdrawals + " withdrawals"}
+                        explanation='The total value of all withdrawals you have made on Roobet'
                     />
                 </div>
                 <ProfitLineChart />
@@ -152,12 +159,14 @@ export function PageStats() {
                     mostPlayedProviders={stats.playedProviders.slice(0, 3)}
                 />
                 <div className='w-full gap-5 grid sm:grid-cols-2 md:grid-cols-3 '>
-                    <div className='row-span-1 col-span-2 md:col-span-1'><StatsMoneyCard
-                        title='Wagered'
-                        icon={<FaMoneyBillTransfer />}
-                        value={stats.wagered}
-                        description={"in " + stats.totalBets + " bets"}
-                    /></div>
+                    <div className='row-span-1 col-span-2 md:col-span-1'>
+                        <StatsMoneyCard
+                            title='Wagered'
+                            icon={<FaMoneyBillTransfer />}
+                            value={stats.wagered}
+                            description={"in " + stats.totalBets + " bets"}
+                            explanation='The total amount of money you have wagered on Roobet'
+                        /></div>
                     <div className='row-span-3 col-span-2 w-full h-full'><GamePieChart games={stats.playedGames} /></div>
                     <div className='row-span-1 col-span-2 md:col-span-1 '><StatsAdCard /></div>
                     <div className='row-span-2 col-span-2 md:col-span-1'>
@@ -170,6 +179,7 @@ export function PageStats() {
                             value={stats.biggestWin.profit}
                             description={`Won with a $${stats.biggestWin.betAmount} bet in ${getGameName(stats.biggestWin)}`}
                             isProfit
+                            explanation='The biggest win you have had on Roobet'
                         />
                     </div>
                     <div className='row-span-1 col-span-2 md:col-span-1'>
@@ -179,6 +189,7 @@ export function PageStats() {
                             value={stats.biggestMultiplier.mult}
                             description={`Earned $${stats.biggestMultiplier.profit.toFixed(2)} from a $${stats.biggestMultiplier.betAmount} bet in ${getGameName(stats.biggestMultiplier)}`}
                             isMultiplier
+                            explanation='The biggest multiplier you have had on Roobet'
                         />
                     </div>
                 </div>

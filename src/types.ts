@@ -78,7 +78,6 @@ export interface Stats {
     totalProfit: number;
     totalProfitPercentage: number;
     totalProfitChangeLast7Days: number;
-    totalProfitChangeLastMonth: number;
 
     biggestDeposit: Deposit;
     biggestWithdrawal: Withdrawal;

@@ -16,7 +16,6 @@ export default function Header() {
         <MegaMenu className='bg-indigo-950 border-b-2'>
             <div className="mx-auto flex w-full flex-wrap items-center justify-between p-4 md:space-x-8">
                 <NavbarBrand href="/">
-                    <img alt="" src="/favicon.svg" className="mr-3 h-6 sm:h-9" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold text-yellow-300">Rootrack</span>
                 </NavbarBrand>
                 <div className="order-2 hidden items-center md:flex">

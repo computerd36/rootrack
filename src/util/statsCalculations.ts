@@ -1,39 +1,9 @@
 import { Bet, Deposit, Withdrawal } from "../types";
-import { subMonths, subDays, isSameMonth, differenceInCalendarDays, parseISO, closestTo } from 'date-fns';
+import { subDays, differenceInCalendarDays, parseISO, closestTo } from 'date-fns';
 import { getGameName } from "./gameName";
 
 export const parseDate = (dateString: string): Date => new Date(dateString);
 
-// Calculate the total profit change in the last month
-export function calculateTotalProfitChangeLastMonth(deposits: Deposit[], withdrawals: Withdrawal[]): number {
-    // Get the current date and the previous months
-    const currentDate = new Date();
-    const lastMonthDate = subMonths(currentDate, 1);
-    const twoMonthsAgoDate = subMonths(currentDate, 2);
-
-    // Filter deposits and withdrawals for the last month
-    const depositsLastMonth = deposits.filter(deposit => isSameMonth(parseDate(deposit.createdAt), lastMonthDate));
-    const withdrawalsLastMonth = withdrawals.filter(withdrawal => isSameMonth(parseDate(withdrawal.createdAt), lastMonthDate));
-
-    // Filter deposits and withdrawals for the month before last month
-    const depositsPreviousMonth = deposits.filter(deposit => isSameMonth(parseDate(deposit.createdAt), twoMonthsAgoDate));
-    const withdrawalsPreviousMonth = withdrawals.filter(withdrawal => isSameMonth(parseDate(withdrawal.createdAt), twoMonthsAgoDate));
-
-    // Calculate profit for last month
-    const totalDepositsLastMonth = depositsLastMonth.reduce((acc, deposit) => acc + deposit.amount, 0);
-    const totalWithdrawalsLastMonth = withdrawalsLastMonth.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
-    const profitLastMonth = totalWithdrawalsLastMonth - totalDepositsLastMonth;
-
-    // Calculate profit for the previous month
-    const totalDepositsPreviousMonth = depositsPreviousMonth.reduce((acc, deposit) => acc + deposit.amount, 0);
-    const totalWithdrawalsPreviousMonth = withdrawalsPreviousMonth.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
-    const profitPreviousMonth = totalWithdrawalsPreviousMonth - totalDepositsPreviousMonth;
-
-    // Return the profit change (amount, not percentage)
-    const profitChangeLastMonth = profitLastMonth - profitPreviousMonth;
-
-    return profitChangeLastMonth;
-}
 
 // Calculate the total profit change in the last 7 days
 export function calculateProfitChangeTodayComparedTo7DaysAgo(deposits: Deposit[], withdrawals: Withdrawal[]): number {
@@ -63,6 +33,11 @@ export function calculateProfitChangeTodayComparedTo7DaysAgo(deposits: Deposit[]
         ? withdrawals.filter(withdrawal => differenceInCalendarDays(nearestWithdrawalDate7DaysAgo, parseISO(withdrawal.createdAt)) === 0)
         : [];
 
+    // if there are no transactions for today or 7 days ago, return 0
+    if (depositsToday.length === 0 && withdrawalsToday.length === 0 && deposits7DaysAgo.length === 0 && withdrawals7DaysAgo.length === 0) {
+        return 0;
+    }
+
     // Calculate profit for today
     const totalDepositsToday = depositsToday.reduce((acc, deposit) => acc + deposit.amount, 0);
     const totalWithdrawalsToday = withdrawalsToday.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
@@ -74,7 +49,7 @@ export function calculateProfitChangeTodayComparedTo7DaysAgo(deposits: Deposit[]
     const profit7DaysAgo = totalWithdrawals7DaysAgo - totalDeposits7DaysAgo;
 
     // Return the profit change (amount, not percentage)
-    const profitChangeTodayComparedTo7DaysAgo = profit7DaysAgo - profitToday;
+    const profitChangeTodayComparedTo7DaysAgo = profitToday + profit7DaysAgo;
 
     return profitChangeTodayComparedTo7DaysAgo;
 }

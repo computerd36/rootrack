@@ -49,7 +49,7 @@ export function PageForm() {
                     </Button>
                     <Button
                         color="warning"
-                        className="w-1/4"
+                        className="text-nowrap"
                         onClick={() => {
                             if (step < 4) {
                                 setStep(step + 1);
