@@ -122,7 +122,7 @@ export function PageStats() {
     return (
         <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
             <div className='flex flex-col gap-5 items-center max-w-[1250px] p-2 bg-slate-950 rounded-xl' ref={statsRef}>
-                <h1 className='text-3xl text-white flex items-center justify-between w-full h-16'>
+                <h1 className='text-3xl text-white flex items-center justify-between w-full h-8'>
                     <span>Your current Roobet stats</span>
                     <Button onClick={htmlToImageConvert} color={"warning"} className={isDownloadVisible ? '' : 'hidden'}>
                         <div className='flex items-center justify-center gap-2'>
