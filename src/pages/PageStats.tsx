@@ -18,15 +18,16 @@ import { getGameName } from '../util/gameName';
 import { toPng } from 'html-to-image';
 import { Button } from 'flowbite-react';
 
+import RootrackLogo from '/android-chrome-384x384.png';
+
 
 export function PageStats() {
     const { withdrawals, deposits, bets } = useBettingData();
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(true);
-
     const [stats, setStats] = useState<Stats | null>(null);
-
+    const [isDownloadVisible, setIsDownloadVisible] = useState(true);
     const statsRef = useRef(null);
 
     useEffect(() => {
@@ -98,30 +99,39 @@ export function PageStats() {
 
     const htmlToImageConvert = () => {
         if (statsRef.current) {
-            toPng(statsRef.current, { cacheBust: false })
-                .then((dataUrl) => {
-                    const link = document.createElement("a");
-                    link.download = "rootrack-stats.png";
-                    link.href = dataUrl;
-                    link.click();
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            setIsDownloadVisible(false);
+
+            setTimeout(() => {
+                toPng(statsRef.current!, { cacheBust: false })
+                    .then((dataUrl) => {
+                        const link = document.createElement("a");
+                        link.download = "rootrack-stats.png";
+                        link.href = dataUrl;
+                        link.click();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+                    .finally(() => {
+                        setIsDownloadVisible(true);
+                    });
+            }, 0); // Small delay to ensure re-render before capturing
         }
     };
-
 
     return (
         <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
             <div className='flex flex-col gap-5 items-center max-w-[1250px]' ref={statsRef}>
                 <h1 className='text-3xl text-white flex items-center justify-between w-full'>
                     <span>Your current Roobet stats</span>
-                    <Button onClick={htmlToImageConvert} color={"warning"}>
+                    <Button onClick={htmlToImageConvert} color={"warning"} className={!isDownloadVisible ? '' : 'hidden'}>
                         <div className='flex items-center justify-center gap-2'>
                             <FaDownload /> <span>Download stats</span>
                         </div>
                     </Button>
+                    <div className={`flex items-center justify-center gap-2 ${!isDownloadVisible ? 'hidden' : ''}`}>
+                        <img src={RootrackLogo} alt='Rootrack logo' className='w-6 h-6' /> <span className='text-sm'>Stats calculated on rootrack.me</span>
+                    </div>
                 </h1>
                 <div className='flex w-full gap-5 max-w-7xl justify-between flex-col sm:flex-col md:flex-row'>
                     <StatsMoneyCard
@@ -194,6 +204,6 @@ export function PageStats() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
