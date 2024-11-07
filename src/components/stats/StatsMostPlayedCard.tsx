@@ -2,7 +2,7 @@ import { Card } from 'flowbite-react';
 import { FaDice } from 'react-icons/fa';
 
 export interface IStatsMostPlayedCardProps {
-    mostPlayedGames: { game: string, count: number }[];
+    mostPlayedGames: { game: string, provider: string, count: number }[];
     mostPlayedCategories: { category: string, count: number }[];
     mostPlayedProviders: { provider: string, count: number }[];
 }

@@ -89,7 +89,7 @@ export interface Stats {
     biggestMultiplier: Bet;
     biggestLoss: Bet;
 
-    playedGames: { game: string, count: number }[];
+    playedGames: { game: string, provider: string, count: number }[];
     playedCategories: { category: string, count: number }[];
     playedProviders: { provider: string, count: number }[];
 

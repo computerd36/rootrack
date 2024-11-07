@@ -6,7 +6,7 @@ import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
 import { useEffect, useRef, useState } from 'react';
 import { LoadingPage } from '../components/LoadingPage';
 import { StatsMoneyCard } from '../components/stats/StatsMoneyCard';
-import { FaDollarSign, FaTimes } from 'react-icons/fa';
+import { FaDollarSign, FaTimes, FaTrash } from 'react-icons/fa';
 import { ProfitLineChart } from '../components/stats/charts/ProfitLineChart';
 import { FaDownload, FaMoneyBillTransfer } from 'react-icons/fa6';
 import { StatsMostPlayedCard } from '../components/stats/StatsMostPlayedCard';
@@ -22,7 +22,7 @@ import RootrackLogo from '/android-chrome-384x384.png';
 
 
 export function PageStats() {
-    const { withdrawals, deposits, bets } = useBettingData();
+    const { withdrawals, deposits, bets, clearBettingData } = useBettingData();
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(true);
@@ -119,16 +119,31 @@ export function PageStats() {
         }
     };
 
+    const resetStats = () => {
+        //clears the betting data from the bettingdatacontext
+        clearBettingData();
+        //navigates back to the home page
+        navigate('/');
+    };
+
     return (
         <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10 flex justify-center'>
             <div className='flex flex-col gap-5 items-center max-w-[1250px] p-2 bg-slate-950 rounded-xl' ref={statsRef}>
                 <h1 className='text-3xl text-white flex items-center justify-between w-full h-8'>
                     <span>Your current Roobet stats</span>
-                    <Button onClick={htmlToImageConvert} color={"warning"} className={isDownloadVisible ? '' : 'hidden'}>
-                        <div className='flex items-center justify-center gap-2'>
-                            <FaDownload /> <span>Download stats</span>
-                        </div>
-                    </Button>
+                    <div className='flex '>
+                        <Button onClick={resetStats} color={"danger"} className={isDownloadVisible ? '' : 'hidden'}>
+                            <div className='flex items-center justify-center gap-2'>
+                                <FaTrash /><span>Reset stats</span>
+                            </div>
+                        </Button>
+
+                        <Button onClick={htmlToImageConvert} color={"warning"} className={isDownloadVisible ? '' : 'hidden'}>
+                            <div className='flex items-center justify-center gap-2'>
+                                <FaDownload /> <span>Download stats</span>
+                            </div>
+                        </Button>
+                    </div>
                     <div className={`flex items-center justify-center gap-2 ${isDownloadVisible ? 'hidden' : ''}`}>
                         <img src={RootrackLogo} alt='Rootrack logo' className='w-6 h-6' /> <span className='text-sm'>Stats calculated on rootrack.me</span>
                     </div>

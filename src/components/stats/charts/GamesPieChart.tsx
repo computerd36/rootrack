@@ -7,8 +7,6 @@ interface GamePieChartProps {
 }
 
 export const GamePieChart = ({ games }: GamePieChartProps) => {
-    console.log(games);
-
     return (
         <Card className="bg-indigo-900 grow w-full h-full">
             <h2 className='flex items-center gap-2 text-indigo-300 mb-auto'><FaChartPie /> Bets per game</h2>
