@@ -15,7 +15,8 @@ export default function Header() {
     return (
         <MegaMenu className='bg-indigo-950 border-b-2'>
             <div className="mx-auto flex w-full flex-wrap items-center justify-between p-4 md:space-x-8">
-                <NavbarBrand href="/">
+                <NavbarBrand onClick={() => navigate('/')} className='flex gap-2 cursor-pointer'>
+                    <img src="/android-chrome-192x192.png" alt="Rootrack Logo" className="h-8 rounded-lg border border-yellow-300" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold text-yellow-300">Rootrack</span>
                 </NavbarBrand>
                 <div className="order-2 hidden items-center md:flex">
@@ -32,7 +33,7 @@ export default function Header() {
                 </div>
                 <NavbarToggle />
                 <NavbarCollapse>
-                    <NavbarLink href="/faq" className='text-white'>FAQ</NavbarLink>
+                    <NavbarLink onClick={() => navigate('/faq')} className='text-white cursor-pointer'>FAQ</NavbarLink>
                     <NavbarLink href="https://github.com/computerd36/rootrack" target='blank' className='text-white'>Repository</NavbarLink>
                     <NavbarLink href="mailto:mail@36it.de" target='blank' className='text-white'>Contact</NavbarLink>
                 </NavbarCollapse>
