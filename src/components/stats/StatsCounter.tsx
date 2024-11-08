@@ -53,7 +53,7 @@ export function StatsCounter({ setLoaded }: StatsCounterProps) {
                     {shortNumber(counter).number + shortNumber(counter).suffix}
                 </span>
             </span>
-            <span className='text-yellow-300/20 2xl:text-5xl xl:text-4xl text-2xl '>
+            <span className='text-yellow-300/50 2xl:text-5xl xl:text-4xl text-2xl '>
                 &nbsp;
                 insights generated
             </span>

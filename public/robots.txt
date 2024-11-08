@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /stats
+
+Sitemap: https://www.rootrack.me/sitemap.xml
