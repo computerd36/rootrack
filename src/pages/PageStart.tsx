@@ -26,13 +26,13 @@ export function PageStart() {
             <div className='flex w-full grow overflow-hidden'>
 
                 {/* Left side */}
-                <div className='z-10 md:w-1/2 sm:w-full px-6 md:pl-12 md:pr-0 min-w-24 text-left flex flex-col justify-center gap-2 to-indigo-750'>
+                <div className='z-10 md:w-1/2 sm:w-full px-6 md:pl-12 md:pr-0 min-w-24 text-left flex flex-col justify-center gap-2'>
                     <h1 className='text-yellow-300 2xl:text-8xl xl:text-7xl md:text-5xl text-6xl font-semibold'>Track Your Betting Journey with Ease</h1>
                     <h2 className='text-yellow-300/90 xl:text-2xl md:text-xl text-xl'>The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.</h2>
                     <div className='flex gap-3 justify-end'>
                         <Link
                             to="/form"
-                            className="text-yellow-300 bg-indigo-950 font-2xl font-semibold px-6 py-2 rounded-xl inline-flex items-center border-2 border-yellow-300"
+                            className="text-indigo-950 bg-yellow-300 hover:bg-yellow-300/80 font-2xl font-semibold px-6 py-2 mt-4 rounded-xl inline-flex items-center"
                         >
                             Create Insights
                             <HiOutlineArrowRight className="ml-2 h-6 w-6" />

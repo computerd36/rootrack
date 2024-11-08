@@ -20,7 +20,7 @@ export default function Header() {
                 <div className="order-2 hidden items-center md:flex">
                     <Link
                         to="/form"
-                        className="text-yellow-300 bg-indigo-950 font-2xl font-semibold px-6 py-2 rounded-xl inline-flex items-center border-2 border-yellow-300"
+                        className="text-yellow-300 bg-indigo-950 hover:bg-indigo-900 font-2xl font-semibold px-6 py-2 rounded-xl inline-flex items-center border-2 border-yellow-300"
                     >
                         Create Insights
                         <HiOutlineArrowRight className="ml-2 h-6 w-6" />
