@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // assets
-import RootrackScreenshot from '../assets/rootrack-sc.png';
+import RootrackScreenshot from '../assets/rootrack-sc.webp';
 
 export function PageStart() {
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ export function PageStart() {
                             onClick={() => {
                                 navigate('/form')
                             }}
-                            className='text-white font-black'
+                            className='text-slate-950 font-black'
                         >
                             Start
                             <HiOutlineArrowRight className="ml-2 h-5 w-5" />
@@ -51,11 +51,11 @@ export function PageStart() {
                         <StatsCounter setLoaded={setLoaded} />
                     </div>
                     <motion.div
-                        initial={{ y: 300, opacity: 0 }} // Start off-screen to the right
+                        initial={{ y: 200, opacity: 0 }} // Start off-screen to the right
                         animate={loaded ? { y: 0, opacity: 1 } : {}}   // Animate to the final position
                         transition={{ duration: 1, ease: 'easeOut', type: 'spring' }} // Customize duration and easing
                     >
-                        <img src={RootrackScreenshot} alt="Rootrack Screenshot" className='opacity-[25%] hover:opacity-[50%] transition-all duration-500' />
+                        <img src={RootrackScreenshot} alt="Rootrack Screenshot" className='opacity-[25%] hover:opacity-[50%] transition-all duration-500 pointer-events-none' />
                     </motion.div>
                 </div>
             </div>
