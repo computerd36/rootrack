@@ -2,20 +2,18 @@
 import { useState } from 'react';
 
 // UI, icons and components
-import { Button } from 'flowbite-react';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import Header from '../components/Header';
 import { StatsCounter } from '../components/stats/StatsCounter';
 
 // modules
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // assets
 import RootrackScreenshot from '../assets/rootrack-sc.webp';
 
 export function PageStart() {
-    const navigate = useNavigate();
 
     // loaded state for the counter 
     const [loaded, setLoaded] = useState(false);
@@ -32,16 +30,13 @@ export function PageStart() {
                     <h1 className='text-yellow-300 2xl:text-8xl xl:text-7xl md:text-5xl text-6xl font-semibold'>Track Your Betting Journey with Ease</h1>
                     <h2 className='text-yellow-300/90 xl:text-2xl md:text-xl text-xl'>The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.</h2>
                     <div className='flex gap-3 justify-end'>
-                        <Button
-                            color="warning"
-                            onClick={() => {
-                                navigate('/form')
-                            }}
-                            className='text-slate-950 font-black'
+                        <Link
+                            to="/form"
+                            className="text-yellow-300 bg-indigo-950 font-2xl font-semibold px-6 py-2 rounded-xl inline-flex items-center border-2 border-yellow-300"
                         >
-                            Start
-                            <HiOutlineArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
+                            Create Insights
+                            <HiOutlineArrowRight className="ml-2 h-6 w-6" />
+                        </Link>
                     </div>
                 </div>
 
