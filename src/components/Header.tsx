@@ -25,7 +25,8 @@ export default function Header() {
                         onClick={() => {
                             navigate('/form')
                         }}
-                        className='text-white font-black'
+                        className='text-indigo-950 font-black'
+                        aria-label='Start the insight generation process'
                     >
                         Start process
                         <HiOutlineArrowRight className="ml-2 h-5 w-5" />
@@ -33,9 +34,9 @@ export default function Header() {
                 </div>
                 <NavbarToggle />
                 <NavbarCollapse>
-                    <NavbarLink onClick={() => navigate('/faq')} className='text-white cursor-pointer'>FAQ</NavbarLink>
-                    <NavbarLink href="https://github.com/computerd36/rootrack" target='blank' className='text-white'>Repository</NavbarLink>
-                    <NavbarLink href="mailto:mail@36it.de" target='blank' className='text-white'>Contact</NavbarLink>
+                    <NavbarLink onClick={() => navigate('/faq')} className='text-white cursor-pointer' aria-label='Navigate to FAQ'>FAQ</NavbarLink>
+                    <NavbarLink href="https://github.com/computerd36/rootrack" target='blank' className='text-white' aria-label='Navigate to the GitHub repository'>Repository</NavbarLink>
+                    <NavbarLink href="mailto:mail@36it.de" target='blank' className='text-white' aria-label='Send an email to the developer'>Contact</NavbarLink>
                 </NavbarCollapse>
             </div>
         </MegaMenu>

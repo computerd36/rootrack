@@ -41,9 +41,10 @@ export function PageForm() {
                         onClick={() => {
                             if (step > 1) {
                                 setStep(step - 1);
+                            } else {
+                                navigate("/");
                             }
                         }}
-                        disabled={step === 1}
                     >
                         <HiOutlineArrowLeft className="h-5 w-5" />
                     </Button>
