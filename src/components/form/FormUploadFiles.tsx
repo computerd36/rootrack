@@ -5,9 +5,9 @@ import { useDropzone } from 'react-dropzone';
 import { isValidBet, isValidDeposit, isValidWithdrawal } from '../../util/fileValidator';
 import { useBettingData } from '../../context/bettingDataContext';
 import { Bet } from '../../types';
+import { incrementCounter } from '../../firebase/counter';
 
 export function FormUploadFiles() {
-    // Context
     const { setWithdrawals, setDeposits, setBets } = useBettingData();
 
     const [filesStatus, setFilesStatus] = useState({
@@ -45,6 +45,7 @@ export function FormUploadFiles() {
                         }));
                         setBets(bets);
                         setFilesStatus(prev => ({ ...prev, bets: true }));
+                        incrementCounter();
                     } else {
                         console.log(`Invalid or unrecognized file: ${file.name}`);
                     }
