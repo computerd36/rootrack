@@ -1,55 +1,55 @@
 import { Bet, Deposit, Withdrawal } from "../types";
-import { subDays, differenceInCalendarDays, parseISO, closestTo } from 'date-fns';
+import { subDays, parseISO, max } from 'date-fns';
 import { getGameName, getProviderName } from "./gameName";
 
-// Calculate the total profit change in the last 7 days
-export function calculateProfitChangeTodayComparedTo7DaysAgo(deposits: Deposit[], withdrawals: Withdrawal[]): number {
-    // Get today's date and the date 7 days ago
-    const currentDate = new Date();
-    const date7DaysAgo = subDays(currentDate, 7);
+export function calculateProfitChangeOverLast7Days(
+    deposits: Deposit[],
+    withdrawals: Withdrawal[]
+): number {
+    // Combine all transaction dates
+    const allTransactionDates = [
+        ...deposits.map((d) => parseISO(d.createdAt)),
+        ...withdrawals.map((w) => parseISO(w.createdAt)),
+    ];
 
-    // Helper function to find the nearest transaction day before or on a specific date
-    function findNearestDate(transactions: { createdAt: string }[], targetDate: Date): Date | null | undefined {
-        const dates = transactions.map(t => parseISO(t.createdAt));
-        return dates.length > 0 ? closestTo(targetDate, dates) : null;
+    if (allTransactionDates.length === 0) {
+        return 0; // No transactions
     }
 
-    // Filter deposits and withdrawals for today
-    const depositsToday = deposits.filter(deposit => differenceInCalendarDays(currentDate, parseISO(deposit.createdAt)) === 0);
-    const withdrawalsToday = withdrawals.filter(withdrawal => differenceInCalendarDays(currentDate, parseISO(withdrawal.createdAt)) === 0);
+    // Find the latest transaction date
+    const latestTransactionDate = max(allTransactionDates);
 
-    // Find the nearest day with transactions before or on date7DaysAgo
-    const nearestDepositDate7DaysAgo = findNearestDate(deposits, date7DaysAgo);
-    const nearestWithdrawalDate7DaysAgo = findNearestDate(withdrawals, date7DaysAgo);
+    // Date 7 days before the latest transaction date
+    const date7DaysAgo = subDays(latestTransactionDate, 7);
 
-    // Filter deposits and withdrawals for the nearest date 7 days ago
-    const deposits7DaysAgo = nearestDepositDate7DaysAgo
-        ? deposits.filter(deposit => differenceInCalendarDays(nearestDepositDate7DaysAgo, parseISO(deposit.createdAt)) === 0)
-        : [];
-    const withdrawals7DaysAgo = nearestWithdrawalDate7DaysAgo
-        ? withdrawals.filter(withdrawal => differenceInCalendarDays(nearestWithdrawalDate7DaysAgo, parseISO(withdrawal.createdAt)) === 0)
-        : [];
+    // Calculate cumulative deposits and withdrawals up to latestTransactionDate
+    const cumulativeDepositsLatest = deposits
+        .filter((deposit) => parseISO(deposit.createdAt) <= latestTransactionDate)
+        .reduce((acc, deposit) => acc + deposit.amount, 0);
 
-    // if there are no transactions for today or 7 days ago, return 0
-    if (depositsToday.length === 0 && withdrawalsToday.length === 0 && deposits7DaysAgo.length === 0 && withdrawals7DaysAgo.length === 0) {
-        return 0;
-    }
+    const cumulativeWithdrawalsLatest = withdrawals
+        .filter((withdrawal) => parseISO(withdrawal.createdAt) <= latestTransactionDate)
+        .reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
 
-    // Calculate profit for today
-    const totalDepositsToday = depositsToday.reduce((acc, deposit) => acc + deposit.amount, 0);
-    const totalWithdrawalsToday = withdrawalsToday.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
-    const profitToday = totalWithdrawalsToday - totalDepositsToday;
+    const cumulativeProfitLatest = cumulativeWithdrawalsLatest - cumulativeDepositsLatest;
 
-    // Calculate profit for the nearest day 7 days ago
-    const totalDeposits7DaysAgo = deposits7DaysAgo.reduce((acc, deposit) => acc + deposit.amount, 0);
-    const totalWithdrawals7DaysAgo = withdrawals7DaysAgo.reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
-    const profit7DaysAgo = totalWithdrawals7DaysAgo - totalDeposits7DaysAgo;
+    // Calculate cumulative deposits and withdrawals up to date7DaysAgo
+    const cumulativeDeposits7DaysAgo = deposits
+        .filter((deposit) => parseISO(deposit.createdAt) <= date7DaysAgo)
+        .reduce((acc, deposit) => acc + deposit.amount, 0);
 
-    // return the difference in profit
-    const profitChangeTodayComparedTo7DaysAgo = profitToday - profit7DaysAgo;
+    const cumulativeWithdrawals7DaysAgo = withdrawals
+        .filter((withdrawal) => parseISO(withdrawal.createdAt) <= date7DaysAgo)
+        .reduce((acc, withdrawal) => acc + withdrawal.totalValue, 0);
 
-    return profitChangeTodayComparedTo7DaysAgo;
+    const cumulativeProfit7DaysAgo = cumulativeWithdrawals7DaysAgo - cumulativeDeposits7DaysAgo;
+
+    // Return the difference in cumulative profit over the last 7 days
+    const profitChangeOver7Days = cumulativeProfitLatest - cumulativeProfit7DaysAgo;
+
+    return profitChangeOver7Days;
 }
+
 
 // determine the most played games by counting the number of bets for each game and sorting them
 export function determineMostPlayedGames(bets: Bet[]): { game: string, provider: string, count: number }[] {
