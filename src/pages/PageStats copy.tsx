@@ -148,9 +148,6 @@ export function PageStats() {
                         <img src={RootrackLogo} alt='Rootrack logo' className='w-6 h-6' /> <span className='text-sm'>Stats calculated on rootrack.me</span>
                     </div>
                 </h1>
-
-
-                
                 <div className='flex w-full gap-5 max-w-7xl justify-between flex-col sm:flex-col md:flex-row'>
                     <StatsMoneyCard
                         title='Deposits'

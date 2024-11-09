@@ -10,3 +10,7 @@ body,
     padding: 0;
     background-color: #020617;
 }
+
+body {
+    font-family: 'Gabarito Variable', system-ui;
+}
