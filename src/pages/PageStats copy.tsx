@@ -1,4 +1,4 @@
-import { useBettingData } from '../context/bettingDataContext';
+import { useBettingData } from '../hooks/bettingDataContext';
 import { useNavigate } from 'react-router-dom';
 import { Stats } from '../types';
 import { calculateProfitChangeTodayComparedTo7DaysAgo, determineMostPlayedGames, determineMostPlayedCategories, determineMostPlayedProviders, determineBetsPerWeekday } from '../util/statsCalculations';

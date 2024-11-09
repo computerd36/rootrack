@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, TooltipProps, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { useBettingData } from '../../../context/bettingDataContext';
+import { useBettingData } from '../../../hooks/bettingDataContext';
 import { format, parseISO } from 'date-fns';
 import { FaChartLine } from 'react-icons/fa';
-import { Card } from 'flowbite-react';
 import ColorizedAmount from '../ColorizedAmount';
+import { StatsContainer } from '../StatsContainer';
 
 interface ProfitDataPoint {
     date: string;
@@ -59,12 +59,11 @@ export function ProfitLineChart() {
     }
 
     return (
-        <Card className="bg-indigo-900 grow w-full">
-            <h2 className='flex items-center gap-2 text-indigo-300'><FaChartLine /> Profit Performance</h2>
-            <ResponsiveContainer width="100%" height={400}>
+        <StatsContainer name="Profit over time" icon={<FaChartLine />}>
+            <ResponsiveContainer width="100%" height="100%" >
                 <LineChart
                     data={profitData}
-                    margin={{ right: 30, left: 20 }}
+                    margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
                 >
                     <XAxis stroke='#e5edff' dataKey="date" tickFormatter={(tick) => format(parseISO(tick), 'MM-dd')} />
                     <YAxis stroke='#e5edff' tickFormatter={(tick) => `$${tick}`} />
@@ -74,7 +73,7 @@ export function ProfitLineChart() {
                     <Line type="monotone" dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
-        </Card>
+        </StatsContainer>
     );
 }
 

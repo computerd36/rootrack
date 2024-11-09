@@ -1,15 +1,15 @@
-import { Card } from 'flowbite-react';
 import { FaGift } from 'react-icons/fa';
+import { StatsContainer } from './StatsContainer';
 
 export function StatsAdCard() {
-    const handleClick = () => {
-        window.open('https://roobet.com/?ref=cd36', '_blank');
-    }
 
     return (
-        <Card className="bg-indigo-900 w-full hover:bg-indigo-800 cursor-pointer" onClick={handleClick}>
-            <h2 className='mb-0 text-2xl font-bold tracking-tight text-indigo-300 flex items-center gap-2'><FaGift /> Support and earn</h2>
-            <p className='font-normal text-indigo-100'> Click here to use our bonus code on Roobet to support the development of the project.</p>
-        </Card>
+        <StatsContainer
+            name='Support and earn'
+            icon={<FaGift />}
+        >
+            <p className='font-normal text-xl my-auto text-indigo-100'> Use bonus code <span className='font-bold text-yellow-400' >cd36</span> on Roobet to support the development of this project or click <a href='https://roobet.com/?ref=cd36' target='_blank' className='font-semibold text-yellow-400'>here</a>.</p>
+
+        </StatsContainer>
     );
 }

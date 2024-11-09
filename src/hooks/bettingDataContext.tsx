@@ -7,9 +7,11 @@ interface BettingDataContextType {
     deposits: Deposit[];
     bets: Bet[];
     creationDate: string | null;
+    userName: string | null;
     setWithdrawals: React.Dispatch<React.SetStateAction<Withdrawal[]>>;
     setDeposits: React.Dispatch<React.SetStateAction<Deposit[]>>;
     setBets: React.Dispatch<React.SetStateAction<Bet[]>>;
+    setUserName: React.Dispatch<React.SetStateAction<string | null>>;
     clearBettingData: () => void;
     isBettingDataStored: () => boolean;
 }
@@ -33,6 +35,10 @@ export const BettingDataContextProvider = ({ children }: { children: ReactNode }
         () => localStorage.getItem('creationDate')
     );
 
+    const [userName, setUserName] = useState<string | null>(
+        () => localStorage.getItem('userName')
+    );
+
     // Use useEffect to update local storage when the state changes
     useEffect(() => {
         if (withdrawals.length || deposits.length || bets.length) {
@@ -43,11 +49,11 @@ export const BettingDataContextProvider = ({ children }: { children: ReactNode }
                 localStorage.setItem('creationDate', date);
             }
         }
-
+        localStorage.setItem('userName', userName || '');
         localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
         localStorage.setItem('deposits', JSON.stringify(deposits));
         localStorage.setItem('bets', JSON.stringify(bets));
-    }, [withdrawals, deposits, bets, creationDate]);
+    }, [withdrawals, deposits, bets, creationDate, userName]);
 
     // Function to clear all betting data and local storage
     const clearBettingData = () => {
@@ -55,10 +61,12 @@ export const BettingDataContextProvider = ({ children }: { children: ReactNode }
         setDeposits([]);
         setBets([]);
         setCreationDate(null);
+        setUserName(null);
         localStorage.removeItem('withdrawals');
         localStorage.removeItem('deposits');
         localStorage.removeItem('bets');
         localStorage.removeItem('creationDate');
+        localStorage.removeItem('userName');
     };
 
     // Function to check if any betting data is stored
@@ -77,9 +85,11 @@ export const BettingDataContextProvider = ({ children }: { children: ReactNode }
                 deposits,
                 bets,
                 creationDate,
+                userName,
                 setWithdrawals,
                 setDeposits,
                 setBets,
+                setUserName,
                 clearBettingData,
                 isBettingDataStored
             }}

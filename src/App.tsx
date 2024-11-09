@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { PageStart } from "./pages/PageStart";
 import { PageForm } from "./pages/PageForm";
-import { BettingDataContextProvider } from "./context/bettingDataContext";
+import { BettingDataContextProvider } from "./hooks/bettingDataContext";
 import { PageStats } from "./pages/PageStats";
 import { PageFAQ } from "./pages/PageFAQ";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { useBettingData } from "../../context/bettingDataContext";
+import { useBettingData } from "../../hooks/bettingDataContext";
 import { getPassedTime } from "../../util/dateFormat";
 import { FaHistory, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";

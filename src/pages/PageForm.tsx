@@ -3,7 +3,7 @@ import { FormDownloadFiles } from "../components/form/FormDownloadFiles";
 import { Button } from "flowbite-react";
 import { FormUploadFiles } from "../components/form/FormUploadFiles";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
-import { useBettingData } from "../context/bettingDataContext";
+import { useBettingData } from "../hooks/bettingDataContext";
 import { useNavigate } from "react-router-dom";
 import { FormDownloadBets } from "../components/form/FormDownloadBets";
 import { FormLogin } from "../components/form/FormLogin";
