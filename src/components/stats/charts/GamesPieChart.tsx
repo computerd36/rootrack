@@ -1,6 +1,6 @@
-import { Card } from 'flowbite-react';
 import { FaChartPie } from 'react-icons/fa';
 import { PieChart, Pie, Tooltip, TooltipProps, ResponsiveContainer } from 'recharts';
+import { StatsContainer } from '../StatsContainer';
 
 interface GamePieChartProps {
     games: { game: string, count: number }[];
@@ -8,9 +8,11 @@ interface GamePieChartProps {
 
 export const GamePieChart = ({ games }: GamePieChartProps) => {
     return (
-        <Card className="bg-indigo-900 grow w-full h-full">
-            <h2 className='flex items-center gap-2 text-indigo-300 mb-auto'><FaChartPie /> Bets per game</h2>
-            <ResponsiveContainer width="100%" height={400}>
+        <StatsContainer
+            name='Bets per game'
+            icon={<FaChartPie />}
+        >
+            <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
                         dataKey="count"
@@ -18,7 +20,7 @@ export const GamePieChart = ({ games }: GamePieChartProps) => {
                         data={games}
                         cx="50%"
                         cy="50%"
-                        outerRadius={120}
+                        outerRadius={150}
                         fill="#8884d8"
                         label={(entry) => entry.game.length > 15 ? entry.game.substring(0, 12) + '..' : entry.game}
                         paddingAngle={10}
@@ -26,7 +28,7 @@ export const GamePieChart = ({ games }: GamePieChartProps) => {
                     <Tooltip content={CustomTooltip} />
                 </PieChart>
             </ResponsiveContainer>
-        </Card>
+        </StatsContainer>
     );
 }
 

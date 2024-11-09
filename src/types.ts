@@ -54,6 +54,9 @@ export interface Withdrawal {
 
 // Bets
 export interface Bet {
+    user?: {
+        name: string;
+    }
     betAmount: number;
     currency: string;
     balanceType: string;
@@ -69,6 +72,8 @@ export interface Bet {
 
 // Stats
 export interface Stats {
+    userName?: string;
+
     totalDeposits: number;
     totalWithdrawals: number;
 

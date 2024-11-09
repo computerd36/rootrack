@@ -3,7 +3,7 @@ import { FaCheckCircle, FaFileUpload, FaInfoCircle } from 'react-icons/fa';
 import { FaCircleXmark } from 'react-icons/fa6';
 import { useDropzone } from 'react-dropzone';
 import { isValidBet, isValidDeposit, isValidWithdrawal } from '../../util/fileValidator';
-import { useBettingData } from '../../context/bettingDataContext';
+import { useBettingData } from '../../hooks/bettingDataContext';
 import { Bet } from '../../types';
 import { incrementCounter } from '../../firebase/counter';
 
@@ -32,6 +32,9 @@ export function FormUploadFiles() {
                     } else if (file.name === 'bets.json' && json.data.every(isValidBet)) {
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         const bets = json.data.map((bet: any): Bet => ({
+                            user: {
+                                name: bet.user ? bet.user.name : 'Unknown',
+                            },
                             betAmount: bet.betAmount,
                             currency: bet.currency,
                             balanceType: bet.balanceType,

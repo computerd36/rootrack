@@ -1,6 +1,6 @@
-import { Card } from "flowbite-react";
 import { IoCalendar } from "react-icons/io5";
 import { Bar, BarChart, ResponsiveContainer, XAxis, TooltipProps, Tooltip } from "recharts";
+import { StatsContainer } from "../StatsContainer";
 
 
 interface MostBetsDayBarChartProps {
@@ -11,8 +11,10 @@ export default function MostBetsDayBarChart(props: Readonly<MostBetsDayBarChartP
 
 
     return (
-        <Card className="bg-indigo-900 h-full w-full">
-            <h2 className='flex items-center gap-2 text-indigo-300'><IoCalendar />Bets per weekday</h2>
+        <StatsContainer
+            name='Bets per weekday'
+            icon={<IoCalendar />}
+        >
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart width={150} height={40} data={props.data}>
                     <Bar dataKey="count" fill="#8884d8" />
@@ -20,7 +22,7 @@ export default function MostBetsDayBarChart(props: Readonly<MostBetsDayBarChartP
                     <XAxis dataKey="weekday" stroke="#E0E7FF" />
                 </BarChart>
             </ResponsiveContainer>
-        </Card>
+        </StatsContainer>
     );
 }
 

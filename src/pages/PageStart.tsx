@@ -2,16 +2,16 @@
 import { useState } from 'react';
 
 // UI, icons and components
-import { HiOutlineArrowRight } from 'react-icons/hi';
 import Header from '../components/Header';
 import { StatsCounter } from '../components/stats/StatsCounter';
 
 // modules
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // assets
 import RootrackScreenshot from '../assets/rootrack-sc.webp';
+import { Button } from '../components/UI/Button';
+import { FaPlus } from 'react-icons/fa';
 
 export function PageStart() {
 
@@ -27,17 +27,8 @@ export function PageStart() {
 
                 {/* Left side */}
                 <div className='z-10 md:w-1/2 sm:w-full px-6 md:pl-12 md:pr-0 min-w-24 text-left flex flex-col justify-center gap-2'>
-                    <h1 className='text-yellow-300 2xl:text-8xl xl:text-7xl md:text-5xl text-6xl font-semibold'>Track Your Betting Journey with Ease</h1>
-                    <h2 className='text-yellow-300/90 xl:text-2xl md:text-xl text-xl'>The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.</h2>
-                    <div className='flex gap-3 justify-end'>
-                        <Link
-                            to="/form"
-                            className="text-indigo-950 bg-yellow-300 hover:bg-yellow-300/80 font-2xl font-semibold px-6 py-2 mt-4 rounded-xl inline-flex items-center"
-                        >
-                            Create Insights
-                            <HiOutlineArrowRight className="ml-2 h-6 w-6" />
-                        </Link>
-                    </div>
+                    <h1 className='text-yellow-300 2xl:text-9xl xl:text-8xl md:text-7xl text-7xl md:text-left text-center font-semibold'>Track Your Betting Journey with Ease</h1>
+                    <h2 className='text-yellow-300/90 xl:text-2xl md:text-xl text-xl md:text-left text-center'>The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.</h2>
                 </div>
 
                 {/* Right side */}
