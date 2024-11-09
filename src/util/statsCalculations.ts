@@ -2,9 +2,6 @@ import { Bet, Deposit, Withdrawal } from "../types";
 import { subDays, differenceInCalendarDays, parseISO, closestTo } from 'date-fns';
 import { getGameName, getProviderName } from "./gameName";
 
-export const parseDate = (dateString: string): Date => new Date(dateString);
-
-
 // Calculate the total profit change in the last 7 days
 export function calculateProfitChangeTodayComparedTo7DaysAgo(deposits: Deposit[], withdrawals: Withdrawal[]): number {
     // Get today's date and the date 7 days ago

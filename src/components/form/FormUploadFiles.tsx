@@ -78,13 +78,13 @@ export function FormUploadFiles() {
             </div>
 
             <div className='flex justify-center gap-8'>
-                <h2 className='text-white text-md font-bold flex items-center gap-2'>
+                <h2 className='text-white text-md font-semibold flex items-center gap-2'>
                     {filesStatus.withdrawals ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Withdrawals
                 </h2>
-                <h2 className='text-white text-md font-bold flex items-center gap-2'>
+                <h2 className='text-white text-md font-semibold flex items-center gap-2'>
                     {filesStatus.deposits ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Deposits
                 </h2>
-                <h2 className='text-white text-md font-bold flex items-center gap-2'>
+                <h2 className='text-white text-md font-semibold flex items-center gap-2'>
                     {filesStatus.bets ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Bets
                 </h2>
             </div>
