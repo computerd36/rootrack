@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Bet, Deposit, Stats, Withdrawal } from '../types';
 import {
-    calculateProfitChangeTodayComparedTo7DaysAgo,
+    calculateProfitChangeOverLast7Days,
     determineMostPlayedGames,
     determineMostPlayedCategories,
     determineMostPlayedProviders,
@@ -31,7 +31,7 @@ export function useBettingStats(deposits: Deposit[], withdrawals: Withdrawal[], 
                 totalWithdrawalsValue: totalWithdrawalsValue,
                 totalProfit: totalProfit,
                 totalProfitPercentage: (totalProfit / totalDepositsValue) * 100,
-                totalProfitChangeLast7Days: calculateProfitChangeTodayComparedTo7DaysAgo(deposits, withdrawals),
+                totalProfitChangeLast7Days: calculateProfitChangeOverLast7Days(deposits, withdrawals),
                 biggestDeposit: deposits.reduce((biggest, deposit) => deposit.amount > biggest.amount ? deposit : biggest, deposits[0]),
                 biggestWithdrawal: withdrawals.reduce((biggest, withdrawal) => withdrawal.totalValue > biggest.totalValue ? withdrawal : biggest, withdrawals[0]),
                 wagered: bets.reduce((acc, bet) => acc + bet.betAmount, 0),
