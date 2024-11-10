@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FormDownloadFiles } from "../components/form/FormDownloadFiles";
-import { Button } from "flowbite-react";
+import { Button } from "../components/UI/Button";
 import { FormUploadFiles } from "../components/form/FormUploadFiles";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 import { useBettingData } from "../hooks/bettingDataContext";
@@ -27,7 +27,7 @@ export function PageForm() {
 
     return (
         <div className='w-full h-full bg-slate-950 flex items-center justify-center'>
-            <div className='xl:w-1/2 md:w-full max-w-[800px] bg-indigo-900 rounded-xl flex flex-col justify-between p-5 m-5'>
+            <div className='xl:w-1/2 md:w-full max-w-[800px] bg-indigo-950 rounded-xl flex flex-col justify-between p-5 m-5 border-4 border-yellow-400/80'>
                 {step === 1 && <FormLogin />}
                 {step === 2 && <FormDownloadFiles keybind={ctrlKeybind} />}
                 {step === 3 && <FormDownloadBets keybind={ctrlKeybind} />}
@@ -36,8 +36,7 @@ export function PageForm() {
 
                 <div className="flex items-center justify-between">
                     <Button
-                        color="warning"
-                        className="w-16"
+                        ariaLabel="Previous step"
                         onClick={() => {
                             if (step > 1) {
                                 setStep(step - 1);
@@ -49,8 +48,7 @@ export function PageForm() {
                         <HiOutlineArrowLeft className="h-5 w-5" />
                     </Button>
                     <Button
-                        color="warning"
-                        className="text-nowrap"
+                        ariaLabel="Next step"
                         onClick={() => {
                             if (step < 4) {
                                 setStep(step + 1);

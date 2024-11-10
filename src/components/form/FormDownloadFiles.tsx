@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react';
+import { Button } from '../UI/Button';
 import { FaDownload, FaInfoCircle } from 'react-icons/fa';
 import { Keybind } from './Keybind';
 
@@ -14,12 +14,11 @@ export function FormDownloadFiles({ keybind }: Readonly<FormDownloadFilesProps>)
                 <FaInfoCircle /> After clicking the download button, press <Keybind>{keybind}</Keybind> + <Keybind>S</Keybind> in the new tab to save each file.
             </h3>
 
-            <div className='flex gap-2 my-6'>
+            <div className='flex gap-4 my-6'>
                 <Button
                     className='w-1/2'
-                    color={"light"}
-                    href={"https://roobet.com/_api/history/withdrawals?type=&order=desc&limit=1000000"}
-                    target='_blank'
+                    linkTo={"https://roobet.com/_api/history/withdrawals?type=&order=desc&limit=1000000"}
+                    ariaLabel='Download withdrawals'
                 >
                     <div className='flex items-center justify-center gap-2'>
                         <FaDownload /> Download withdrawals here
@@ -27,9 +26,8 @@ export function FormDownloadFiles({ keybind }: Readonly<FormDownloadFilesProps>)
                 </Button>
                 <Button
                     className='w-1/2'
-                    color={"light"}
-                    href={"https://roobet.com/_api/history/deposits?type=&order=desc&limit=1000000"}
-                    target='_blank'
+                    linkTo={"https://roobet.com/_api/history/deposits?type=&order=desc&limit=1000000"}
+                    ariaLabel='Download deposits'
                 >
                     <div className='flex items-center justify-center gap-2'>
                         <FaDownload /> Download deposits here
