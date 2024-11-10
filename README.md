@@ -26,8 +26,6 @@ The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain 
 
 Rootrack is a **React TypeScript** application designed to help users track their betting activities on **Roobet**. By downloading your deposits, withdrawals, and bets data from Roobet's backend and processing them locally, Rootrack provides insightful statistics and visualizations to help you understand your betting patterns and financial performance.
 
-> **Disclaimer:** _Rootrack is an independent tool and is not affiliated with Roobet in any way. It was created to help Roobet users gain better insights into their gambling behavior by providing detailed tracking and analysis of their betting activities._
-
 ---
 
 ## Features
@@ -35,10 +33,11 @@ Rootrack is a **React TypeScript** application designed to help users track thei
 - **Comprehensive Tracking:** Monitor your deposits, withdrawals, and bets seamlessly.
 - **Detailed Statistics:** Gain insights into your profits, losses, and betting trends.
 - **Interactive Charts:** Visualize your data with a variety of charts powered by Recharts.
+- **Screenshot Downloads:** Users can download a screenshot of their stats to share them.
+- **Customizable Layout:** Users can rearrange the stats to change the layout to their liking.
+- **Persistent Data:** Rootrack saves the current stats in local storage, allowing users to revisit and access their data later.
 - **User-Friendly Interface:** Easy to navigate and use, even for beginners.
 - **Local Data Processing:** All calculations and statistics are performed locally, ensuring your data remains private.
-- **Smooth Animations:** Enhanced user experience with animations and transitions using Framer Motion.
-- **Future Enhancements:** Plans to replace Flowbite components with custom solutions for better performance and customization.
 
 ---
 
@@ -57,7 +56,7 @@ Rootrack is a **React TypeScript** application designed to help users track thei
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/rootrack.git
+   git clone https://github.com/computerd36/rootrack.git
    ```
 
 2. **Navigate to the project directory:**
@@ -90,7 +89,7 @@ In the project directory, you can run:
   npm run dev
   ```
 
-  Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  Runs the app in development mode. Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
 - **Build for Production:**
 
@@ -104,20 +103,23 @@ In the project directory, you can run:
 
 ## Usage
 
-1. **Download Your Data:**
+1. **Visit Rootrack:**
+   - Open your web browser and navigate to [rootrack.me](https://rootrack.me).
 
-   - Log in to your Roobet account.
-   - Navigate to the backend section and download your deposits, withdrawals, and bets data.
+2. **Create a New Insight**
+   - Click on the "Create New" button to start creating a new insight.
 
-2. **Upload Data Locally:**
+3. **Follow the Steps of the GUI:**
+   - Log in on [Roobet](https://roobet.com/)
+   - Download your files from the backend
+   - Drop them on the file upload.
 
-   - Open Rootrack in your browser.
-   - Upload the downloaded CSV or JSON files.
-   - All calculations and statistics are performed locally, ensuring your data remains secure.
+5. **Explore Your Roobet Stats:**
+   - Analyze your betting performance through interactive charts and detailed statistics.
 
-3. **Analyze Your Betting Journey:**
-   - Explore various charts and statistics to understand your betting performance.
-   - Track your profits, losses, and identify trends over time.
+6. **Customize and Share (Optional):**
+   - Rearrange the layout of your stats to suit your preferences.
+   - Download screenshots of your stats to share with friends.
 
 ---
 
@@ -126,7 +128,6 @@ In the project directory, you can run:
 - **UI Enhancements:** Replace Flowbite components with custom-built components for better customization and performance.
 - **Additional Statistics:** Incorporate more advanced metrics and analytics to provide deeper insights.
 - **Export Features:** Allow users to export their analyzed data and charts for external use.
-- **Authentication:** Implement user authentication for enhanced data security and personalized experiences.
 
 ---
 
@@ -159,8 +160,8 @@ Contributions are welcome! If you have suggestions or improvements, feel free to
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://mit-license.org/).
 
 ---
 
-**Disclaimer:** Rootrack processes your betting data locally. Ensure that you handle your data securely and understand the privacy implications of uploading your betting information.
+**Disclaimer:** _Rootrack is an independent tool and is not affiliated with Roobet in any way. It was created to help Roobet users gain better insights into their gambling behavior by providing detailed tracking and analysis of their betting activities._
