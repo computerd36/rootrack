@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react';
+import { Button } from '../UI/Button';
 import { FaInfoCircle, FaSignInAlt } from 'react-icons/fa';
 import { StatsFoundModal } from '../modals/StatsFoundModal';
 
@@ -15,10 +15,9 @@ export function FormLogin() {
                 </h3>
                 <div className='flex gap-2 my-6'>
                     <Button
-                        className='w-full'
-                        color={"light"}
-                        href={"https://roobet.com/?modal=auth&tab=login"}
-                        target='_blank'
+                        linkTo={"https://roobet.com/?modal=auth&tab=login"}
+                        ariaLabel='Login on Roobet'
+                        isFullWidth
                     >
                         <div className='flex items-center justify-center gap-2'>
                             <FaSignInAlt /> Login on Roobet

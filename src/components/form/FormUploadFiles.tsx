@@ -23,13 +23,13 @@ export function FormUploadFiles() {
                 try {
                     const json = JSON.parse(e.target?.result as string);
 
-                    if (file.name === 'withdrawals.json' && isValidWithdrawal(json.data[0])) {
+                    if (file.name.includes('withdrawals') && file.name.includes('.json') && isValidWithdrawal(json.data[0])) {
                         setWithdrawals(json.data);
                         setFilesStatus(prev => ({ ...prev, withdrawals: true }));
-                    } else if (file.name === 'deposits.json' && isValidDeposit(json.data[0])) {
+                    } else if (file.name.includes('deposits') && file.name.includes('.json') && isValidDeposit(json.data[0])) {
                         setDeposits(json.data);
                         setFilesStatus(prev => ({ ...prev, deposits: true }));
-                    } else if (file.name === 'bets.json' && json.data.every(isValidBet)) {
+                    } else if (file.name.includes('bets') && file.name.includes('.json') && json.data.every(isValidBet)) {
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         const bets = json.data.map((bet: any): Bet => ({
                             user: {
@@ -73,7 +73,7 @@ export function FormUploadFiles() {
 
             <div
                 {...getRootProps()}
-                className='border-dashed border-2 border-gray-300 my-2 p-5 text-center cursor-pointer rounded-md bg-slate-800 flex flex-col items-center justify-center gap-2'
+                className='border-dashed border-2 border-gray-300 my-2 p-5 text-center cursor-pointer rounded-md bg-slate-900 flex flex-col items-center justify-center gap-2'
             >
                 <input {...getInputProps()} />
                 <FaFileUpload size={32} className='text-indigo-200' />
