@@ -7,7 +7,7 @@ export function PageFAQ() {
             <Header />
 
             {/* Grid container to hold both the text and the Dice */}
-            <div className='w-full min-h-[100dvh] bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10'>
+            <div className='w-full bg-slate-950 px-4 py-4 sm:px-10 sm:py-10 md:px-20 md:py-10 lg:px-28 lg:py-10 xl:px-72 xl:py-10'>
 
                 <h1 className="text-white text-3xl font-semibold mb-5">Frequently asked questions about Rootrack</h1>
                 <Accordion>
