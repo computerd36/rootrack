@@ -19,6 +19,7 @@ export function FormDownloadFiles({ keybind }: Readonly<FormDownloadFilesProps>)
                     className='w-1/2'
                     linkTo={"https://roobet.com/_api/history/withdrawals?type=&order=desc&limit=1000000"}
                     ariaLabel='Download withdrawals'
+                    inverted
                 >
                     <div className='flex items-center justify-center gap-2'>
                         <FaDownload /> Download withdrawals here
@@ -28,6 +29,7 @@ export function FormDownloadFiles({ keybind }: Readonly<FormDownloadFilesProps>)
                     className='w-1/2'
                     linkTo={"https://roobet.com/_api/history/deposits?type=&order=desc&limit=1000000"}
                     ariaLabel='Download deposits'
+                    inverted
                 >
                     <div className='flex items-center justify-center gap-2'>
                         <FaDownload /> Download deposits here

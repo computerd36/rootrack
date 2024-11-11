@@ -55,9 +55,9 @@ export function StatsCounter({ loaded, setLoaded }: StatsCounterProps) {
             transition={{ delay: 3.8, duration: 1, ease: 'easeInOut', type: "spring", stiffness: 120 }}
             className='md:mr-12 my-auto px-6'
         >
-            <div className='text-yellow-300 font-bold 2xl:text-8xl xl:text-7xl text-6xl '>
-                {/* the counter that shows */}
-                <span className='absolute'>
+            <div className='relative text-yellow-300 font-bold 2xl:text-9xl xl:text-7xl text-6xl '>
+                {/* the counter that shows (centered and absolute) */}
+                <span className='absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2'>
                     {showTimer && <CountUp duration={3} end={shortNumber(counter).number} />}
                     {shortNumber(counter).suffix}
                 </span>

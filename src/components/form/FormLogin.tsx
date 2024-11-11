@@ -18,6 +18,8 @@ export function FormLogin() {
                         linkTo={"https://roobet.com/?modal=auth&tab=login"}
                         ariaLabel='Login on Roobet'
                         isFullWidth
+                        inverted
+
                     >
                         <div className='flex items-center justify-center gap-2'>
                             <FaSignInAlt /> Login on Roobet
