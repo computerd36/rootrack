@@ -125,9 +125,18 @@ In the project directory, you can run:
 
 ## Future Improvements
 
-- **UI Enhancements:** Replace Flowbite components with custom-built components for better customization and performance.
-- **Additional Statistics:** Incorporate more advanced metrics and analytics to provide deeper insights.
-- **Export Features:** Allow users to export their analyzed data and charts for external use.
+- [x] Better looking landing page with animation
+- [x] Added *FAQ* page
+- [ ] Added *About* page
+- [x] Saving last statistics to local storage
+- [ ] Replaced all Flowbite components and removed package
+- [ ] Rearranged layout stays saved in local storage
+- [ ] Improved the wobble animation when rearranging the layout for large cards
+- [ ] When rearranging, the moving card is always in the foreground
+- [ ] Added internationalisation with i18n
+- [ ] Added at least three languages
+- [ ] Added multi-currency support
+- [ ] Export of current stats in other formats supported (PDF, CSV, ...)
 
 ---
 
