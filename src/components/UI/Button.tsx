@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 export interface IButtonProps {
     ariaLabel: string;
     children?: React.ReactNode;
@@ -12,13 +11,27 @@ export interface IButtonProps {
     disabled?: boolean;
     isFullWidth?: boolean;
     className?: string;
+    inverted?: boolean;
 }
 
-export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLabel, isFullWidth, className }: IButtonProps) {
+export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLabel, isFullWidth, className, inverted }: IButtonProps) {
+
+    const baseClasses = `rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-nowrap transition-all ${isFullWidth ? 'w-full' : ''
+        } ${className}`;
+
+    const regularClasses = `text-yellow-400 outline outline-2 hover:outline-4 outline-yellow-400 hover:outline-yellow-300 hover:text-yellow-300`;
+    const invertedClasses = `bg-yellow-400 text-slate-950 outline outline-2 hover:outline-4 outline-yellow-400 hover:bg-yellow-300 hover:outline-yellow-300`;
+
+    const sizeClass = `text-${size ? size : 'md'}`;
+    const classes = `${baseClasses} ${inverted ? invertedClasses : regularClasses} ${sizeClass}`;
 
     if (disabled) {
         return (
-            <button className={`text-yellow-400 border-2 border-yellow-400/70 hover:border-yellow-400/70 rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-nowrap text-${size ? size : 'md'} transition-all opacity-50 cursor-not-allowed ${isFullWidth && 'w-full'} ${className}`} aria-label={ariaLabel}>
+            <button
+                className={`${baseClasses} text-yellow-400 border-2 border-yellow-400/70 hover:border-yellow-400/70 opacity-50 cursor-not-allowed ${sizeClass}`}
+                aria-label={ariaLabel}
+                disabled
+            >
                 {icon} {children}
             </button>
         );
@@ -26,13 +39,18 @@ export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLa
 
     if (linkTo) {
         return (
-            <Link to={linkTo} className={`text-yellow-400 outline outline-2 hover:outline-4 outline-yellow-400 hover:outline-yellow-300 hover:text-yellow-300 rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-nowrap text-${size ? size : 'md'} transition-all ${isFullWidth && 'w-full'} ${className}`} aria-label={ariaLabel} target="_blank">
+            <Link
+                to={linkTo}
+                className={classes}
+                aria-label={ariaLabel}
+                {...(linkTo.startsWith('http') && { target: '_blank', rel: 'noreferrer noopener' })}
+            >
                 {icon} {children}
             </Link>
         );
     } else {
         return (
-            <button onClick={onClick} className={`text-yellow-400 outline outline-2 hover:outline-4 outline-yellow-400 hover:outline-yellow-300 hover:text-yellow-300 rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-nowrap text-${size ? size : 'md'} transition-all ${isFullWidth && 'w-full'} ${className}`} aria-label={ariaLabel}>
+            <button onClick={onClick} className={classes} aria-label={ariaLabel}>
                 {icon} {children}
             </button>
         );

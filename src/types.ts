@@ -89,6 +89,8 @@ export interface Stats {
 
     wagered: number;
     totalBets: number;
+    averageBet: number;
+    overallRTP: number;
 
     biggestWin: Bet;
     biggestMultiplier: Bet;

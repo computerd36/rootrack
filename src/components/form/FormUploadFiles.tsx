@@ -80,7 +80,7 @@ export function FormUploadFiles() {
                 <p className='text-indigo-300/50'>Drag & drop the files you just downloaded, or click to select files</p>
             </div>
 
-            <div className='flex justify-center gap-8'>
+            <div className='flex justify-center gap-8 mb-4'>
                 <h2 className='text-white text-md font-semibold flex items-center gap-2'>
                     {filesStatus.withdrawals ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Withdrawals
                 </h2>

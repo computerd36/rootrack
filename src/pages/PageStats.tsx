@@ -20,7 +20,7 @@ import { getGameName } from '../util/gameName';
 
 // Icons
 import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
-import { FaCheck, FaDollarSign, FaDownload, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaDollarSign, FaDownload, FaMinus, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import { FaMoneyBillTransfer } from 'react-icons/fa6';
 
 
@@ -31,6 +31,7 @@ import { toPng } from 'html-to-image';
 import { BsFillGrid1X2Fill } from 'react-icons/bs';
 import { useBettingStats } from '../hooks/useBettingStats';
 import { motion } from 'framer-motion';
+import { TbMathAvg } from 'react-icons/tb';
 
 
 
@@ -55,9 +56,12 @@ export function PageStats() {
         { i: 'cardWagered', x: 0, y: 7, w: 3, h: 1 },
         { i: 'cardGamesPie', x: 3, y: 7, w: 6, h: 3 },
         { i: 'cardBetsPerWeekday', x: 0, y: 8, w: 3, h: 2 },
-        { i: 'cardBiggestWin', x: 0, y: 9, w: 3, h: 1 },
+        { i: 'cardAd', x: 0, y: 9, w: 3, h: 1 },
+        { i: 'cardBiggestWin', x: 3, y: 9, w: 3, h: 1 },
         { i: 'cardBiggestMultiplier', x: 6, y: 9, w: 3, h: 1 },
-        { i: 'cardAd', x: 3, y: 9, w: 3, h: 1 }
+        { i: 'cardOverallRTP', x: 0, y: 10, w: 3, h: 1 },
+        { i: 'cardAverageBet', x: 3, y: 10, w: 3, h: 1 },
+        { i: 'cardBiggestLoss', x: 6, y: 10, w: 3, h: 1 },
     ];
 
     // shake animation if the user is rearranging the cards
@@ -168,6 +172,7 @@ export function PageStats() {
                                 title='Deposits'
                                 icon={<PiHandDepositBold />}
                                 value={stats.totalDepositsValue}
+                                type='money'
                                 description={"in " + stats.totalDeposits + " deposits"}
                                 explanation='The total value of all deposits you have made on Roobet'
                             />
@@ -182,6 +187,7 @@ export function PageStats() {
                                 title='Profits'
                                 icon={<FaDollarSign />}
                                 value={stats.totalProfit}
+                                type='money'
                                 description={
                                     <>
                                         <ColorizedAmount>{stats.totalProfitChangeLast7Days.toFixed(2)}</ColorizedAmount>
@@ -202,6 +208,7 @@ export function PageStats() {
                                 title='Withdrawals'
                                 icon={<PiHandWithdrawBold />}
                                 value={stats.totalWithdrawalsValue}
+                                type='money'
                                 description={"in " + stats.totalWithdrawals + " withdrawals"}
                                 explanation='The total value of all withdrawals you have made on Roobet'
                             />
@@ -236,6 +243,7 @@ export function PageStats() {
                                 title='Wagered'
                                 icon={<FaMoneyBillTransfer />}
                                 value={stats.wagered}
+                                type='money'
                                 description={"in " + stats.totalBets + " bets"}
                                 explanation='The total amount of money you have wagered on Roobet'
                             />
@@ -258,14 +266,23 @@ export function PageStats() {
                         </motion.div>
 
                         <motion.div
+                            key='cardAd'
+                            variants={shakeVariants}
+                            animate={isRearranging ? 'shaking' : 'idle'}
+                        >
+                            <StatsAdCard />
+                        </motion.div>
+
+                        <motion.div
                             key='cardBiggestWin'
                             variants={shakeVariants}
                             animate={isRearranging ? 'shaking' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Biggest win'
-                                icon={<FaDollarSign />}
+                                icon={<FaPlus />}
                                 value={stats.biggestWin.profit}
+                                type='money'
                                 description={`Won with a $${stats.biggestWin.betAmount} bet in ${getGameName(stats.biggestWin)}`}
                                 isProfit
                                 explanation='The biggest win you have had on Roobet'
@@ -281,19 +298,58 @@ export function PageStats() {
                                 title='Biggest multiplier'
                                 icon={<FaTimes />}
                                 value={stats.biggestMultiplier.mult}
+                                type='multiplier'
                                 description={`Earned $${stats.biggestMultiplier.profit.toFixed(2)} from a $${stats.biggestMultiplier.betAmount} bet in ${getGameName(stats.biggestMultiplier)}`}
-                                isMultiplier
                                 explanation='The biggest multiplier you have had on Roobet'
                             />
                         </motion.div>
 
                         <motion.div
-                            key='cardAd'
+                            key='cardOverallRTP'
                             variants={shakeVariants}
                             animate={isRearranging ? 'shaking' : 'idle'}
                         >
-                            <StatsAdCard />
+                            <StatsMoneyCard
+                                title='Overall RTP'
+                                icon={<FaCheck />}
+                                value={stats.overallRTP}
+                                type='percentage'
+                                description={"Overall return to player percentage"}
+                                explanation='The average return to player percentage you have had on Roobet per bet (not per dollar)'
+                            />
                         </motion.div>
+
+                        <motion.div
+                            key='cardAverageBet'
+                            variants={shakeVariants}
+                            animate={isRearranging ? 'shaking' : 'idle'}
+                        >
+                            <StatsMoneyCard
+                                title='Average bet'
+                                icon={<TbMathAvg />}
+                                value={stats.averageBet}
+                                type='money'
+                                description={"Average stake per bet"}
+                                explanation='The average amount you have bet on Roobet'
+                            />
+                        </motion.div>
+
+                        <motion.div
+                            key='cardBiggestLoss'
+                            variants={shakeVariants}
+                            animate={isRearranging ? 'shaking' : 'idle'}
+                        >
+                            <StatsMoneyCard
+                                title='Biggest bet lost'
+                                icon={<FaMinus />}
+                                value={stats.biggestLoss.profit}
+                                type='money'
+                                description={`Lost with a $${stats.biggestLoss.betAmount} bet in ${getGameName(stats.biggestLoss)}`}
+                                isProfit
+                                explanation='The biggest loss you have had on a single bet on Roobet'
+                            />
+                        </motion.div>
+
 
                     </ResponsiveReactGridLayout >
                 </div>
