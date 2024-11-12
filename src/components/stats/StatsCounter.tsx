@@ -31,15 +31,22 @@ export function StatsCounter({ loaded, setLoaded }: StatsCounterProps) {
     function shortNumber(n: number): { number: number, suffix: string } {
         if (n < 1000) return { number: n, suffix: '' };
 
-        if (n < 1000000) return { number: Math.round(n / 1000), suffix: 'K' };
+        if (n < 1000000) {
+            const roundedNumber = Math.round((n / 1000 + Number.EPSILON) * 10) / 10;
+            return { number: roundedNumber, suffix: 'K' };
+        }
 
-        if (n < 1000000000) return { number: Math.round(n / 1000000), suffix: 'M' };
+        if (n < 1000000000) {
+            const roundedNumber = Math.round((n / 1000000 + Number.EPSILON) * 10) / 10;
+            return { number: roundedNumber, suffix: 'M' };
+        }
 
-        return { number: Math.round(n / 1000000000), suffix: 'B' };
+        const roundedNumber = Math.round((n / 1000000000 + Number.EPSILON) * 10) / 10;
+        return { number: roundedNumber, suffix: 'B' };
     }
 
     useEffect(() => {
-        if(loaded) {
+        if (loaded) {
             setTimeout(() => {
                 setShowTimer(true);
             }, 3500);
@@ -50,7 +57,7 @@ export function StatsCounter({ loaded, setLoaded }: StatsCounterProps) {
 
     return (
         <motion.div
-            initial={{ scale: 0, opacity: 0}}
+            initial={{ scale: 0, opacity: 0 }}
             animate={loaded ? { scale: 1, opacity: 1 } : {}}
             transition={{ delay: 3.8, duration: 1, ease: 'easeInOut', type: "spring", stiffness: 120 }}
             className='md:mr-12 my-auto px-6'
@@ -68,7 +75,7 @@ export function StatsCounter({ loaded, setLoaded }: StatsCounterProps) {
 
 
             </div>
-            <span className='text-yellow-300 flex flex-col'>
+            <span className='text-yellow-300 flex flex-col mx-auto text-center'>
                 <span className='2xl:text-5xl xl:text-3xl text-2xl '>
                     insights
                 </span>
