@@ -20,7 +20,7 @@ import { getGameName } from '../util/gameName';
 
 // Icons
 import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
-import { FaCheck, FaDollarSign, FaDownload, FaMinus, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaDollarSign, FaDownload, FaMinus, FaPercentage, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import { FaMoneyBillTransfer } from 'react-icons/fa6';
 
 
@@ -32,6 +32,8 @@ import { BsFillGrid1X2Fill } from 'react-icons/bs';
 import { useBettingStats } from '../hooks/useBettingStats';
 import { motion } from 'framer-motion';
 import { TbMathAvg } from 'react-icons/tb';
+import { defaultLayout, usePersistentLayout } from '../hooks/usePersistentLayout';
+import { TiArrowBack } from 'react-icons/ti';
 
 
 
@@ -40,36 +42,26 @@ export function PageStats() {
 
     const { withdrawals, deposits, bets, clearBettingData } = useBettingData();
     const { stats, isLoading } = useBettingStats(deposits, withdrawals, bets);
+    const [layout, setLayout] = usePersistentLayout('userLayout', defaultLayout);
 
     // States
     const [isRearranging, setIsRearranging] = useState(false);
     const [isDownloadVisible, setIsDownloadVisible] = useState(true);
     const statsRef = useRef(null);
 
-    // Layout for the grid
-    const layout = [
-        { i: 'cardDeposits', x: 0, y: 0, w: 3, h: 1 },
-        { i: 'cardProfits', x: 3, y: 0, w: 3, h: 1 },
-        { i: 'cardWithdrawals', x: 6, y: 0, w: 3, h: 1 },
-        { i: 'cardChartProfitLine', x: 0, y: 1, w: 9, h: 3 },
-        { i: 'cardMostPlayed', x: 0, y: 3, w: 9, h: 2 },
-        { i: 'cardWagered', x: 0, y: 7, w: 3, h: 1 },
-        { i: 'cardGamesPie', x: 3, y: 7, w: 6, h: 3 },
-        { i: 'cardBetsPerWeekday', x: 0, y: 8, w: 3, h: 2 },
-        { i: 'cardAd', x: 0, y: 9, w: 3, h: 1 },
-        { i: 'cardBiggestWin', x: 3, y: 9, w: 3, h: 1 },
-        { i: 'cardBiggestMultiplier', x: 6, y: 9, w: 3, h: 1 },
-        { i: 'cardOverallRTP', x: 0, y: 10, w: 3, h: 1 },
-        { i: 'cardAverageBet', x: 3, y: 10, w: 3, h: 1 },
-        { i: 'cardBiggestLoss', x: 6, y: 10, w: 3, h: 1 },
-    ];
 
     // shake animation if the user is rearranging the cards
-    // Inside your PageStats component
     const shakeVariants = {
         idle: { rotate: 0 },
-        shaking: {
-            rotate: [-0.7, 0, 0.7, 0], // Rotation in degrees
+        shakingSmallCard: {
+            rotate: [-0.7, 0, 0.7, 0],
+            transition: {
+                duration: 0.3,
+                repeat: Infinity,
+            },
+        },
+        shakingBigCard: {
+            rotate: [-0.5, 0, 0.5, 0],
             transition: {
                 duration: 0.3,
                 repeat: Infinity,
@@ -116,16 +108,24 @@ export function PageStats() {
         <div className='py-24'>
             <div className='md:w-[730px] xl:w-[920px] 2xl:w-[1240px] mx-auto flex flex-col gap-6'>
 
-                <h1 className='text-5xl text-white'>Current Roobet stats of <span className='font-bold text-yellow-400'>{stats.userName}</span></h1>
+                <h1 className='text-5xl text-white mx-5 md:mx-0'>Current Roobet stats of <span className='font-bold text-yellow-400'>{stats.userName}</span></h1>
 
-                <div className='flex justify-between'>
+                <div className='flex justify-between mx-5 md:mx-0'>
                     {isRearranging ?
-                        <Button
-                            icon={<FaCheck />}
-                            size='xl'
-                            onClick={() => setIsRearranging(!isRearranging)}
-                            ariaLabel='Confirm'
-                        >Confirm</Button>
+                        <>
+                            <Button
+                                icon={<FaCheck />}
+                                size='xl'
+                                onClick={() => setIsRearranging(!isRearranging)}
+                                ariaLabel='Confirm'
+                            >Confirm</Button>
+                            <Button
+                                icon={<TiArrowBack />}
+                                size='xl'
+                                onClick={() => setLayout(defaultLayout)}
+                                ariaLabel='Reset Layout'
+                            >Reset Layout</Button>
+                        </>
                         :
                         <Button
                             icon={<BsFillGrid1X2Fill />}
@@ -162,11 +162,14 @@ export function PageStats() {
                         margin={[20, 20]}
                         useCSSTransforms={false}
                         isDraggable={isRearranging}
+                        onLayoutChange={(layout) => {
+                            if (isRearranging) setLayout(layout);
+                        }}
                     >
                         <motion.div
                             key={'cardDeposits'}
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Deposits'
@@ -181,7 +184,7 @@ export function PageStats() {
                         <motion.div
                             key='cardProfits'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Profits'
@@ -202,7 +205,7 @@ export function PageStats() {
                         <motion.div
                             key='cardWithdrawals'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Withdrawals'
@@ -217,7 +220,7 @@ export function PageStats() {
                         <motion.div
                             key='cardChartProfitLine'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingBigCard' : 'idle'}
                         >
                             <ProfitLineChart />
                         </motion.div>
@@ -225,7 +228,7 @@ export function PageStats() {
                         <motion.div
                             key='cardMostPlayed'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingBigCard' : 'idle'}
                         >
                             <StatsMostPlayedCard
                                 mostPlayedGames={stats.playedGames.slice(0, 4)}
@@ -237,7 +240,7 @@ export function PageStats() {
                         <motion.div
                             key='cardWagered'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Wagered'
@@ -252,7 +255,7 @@ export function PageStats() {
                         <motion.div
                             key='cardGamesPie'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingBigCard' : 'idle'}
                         >
                             <GamePieChart games={stats.playedGames} />
                         </motion.div>
@@ -260,7 +263,7 @@ export function PageStats() {
                         <motion.div
                             key='cardBetsPerWeekday'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <MostBetsDayBarChart data={stats.betsPerWeekday} />
                         </motion.div>
@@ -268,7 +271,7 @@ export function PageStats() {
                         <motion.div
                             key='cardAd'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsAdCard />
                         </motion.div>
@@ -276,7 +279,7 @@ export function PageStats() {
                         <motion.div
                             key='cardBiggestWin'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Biggest win'
@@ -292,7 +295,7 @@ export function PageStats() {
                         <motion.div
                             key='cardBiggestMultiplier'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Biggest multiplier'
@@ -307,11 +310,11 @@ export function PageStats() {
                         <motion.div
                             key='cardOverallRTP'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Overall RTP'
-                                icon={<FaCheck />}
+                                icon={<FaPercentage />}
                                 value={stats.overallRTP}
                                 type='percentage'
                                 description={"Overall return to player percentage"}
@@ -322,14 +325,14 @@ export function PageStats() {
                         <motion.div
                             key='cardAverageBet'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Average bet'
                                 icon={<TbMathAvg />}
                                 value={stats.averageBet}
                                 type='money'
-                                description={"Average stake per bet"}
+                                description={"average bet size"}
                                 explanation='The average amount you have bet on Roobet'
                             />
                         </motion.div>
@@ -337,14 +340,14 @@ export function PageStats() {
                         <motion.div
                             key='cardBiggestLoss'
                             variants={shakeVariants}
-                            animate={isRearranging ? 'shaking' : 'idle'}
+                            animate={isRearranging ? 'shakingSmallCard' : 'idle'}
                         >
                             <StatsMoneyCard
                                 title='Biggest bet lost'
                                 icon={<FaMinus />}
                                 value={stats.biggestLoss.profit}
                                 type='money'
-                                description={`Lost with a $${stats.biggestLoss.betAmount} bet in ${getGameName(stats.biggestLoss)}`}
+                                description={`in ${getGameName(stats.biggestLoss)}`}
                                 isProfit
                                 explanation='The biggest loss you have had on a single bet on Roobet'
                             />

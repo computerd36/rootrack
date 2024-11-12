@@ -16,7 +16,7 @@ export function StatsAdCard() {
             name='Support and earn'
             icon={<FaGift />}
         >
-            <p className='font-normal text-xl my-auto text-indigo-100'>
+            <p className='font-normal text-md xl:text-xl my-auto text-indigo-100'>
                 Use code{' '}
                 <span className='
                     font-bold 

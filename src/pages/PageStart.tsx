@@ -32,7 +32,7 @@ export function PageStart() {
                             size='xl'
                             ariaLabel='Create new insight'
                             linkTo='/form'
-                            className='min-w-1/3 max-w-96'
+                            className='min-w-1/3 max-w-96 mx-auto md:mx-0'
                             inverted
                         >Create Your Roobet Insights</Button>
                     </div>
