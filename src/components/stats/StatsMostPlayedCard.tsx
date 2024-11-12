@@ -13,7 +13,7 @@ export function StatsMostPlayedCard(props: IStatsMostPlayedCardProps) {
             name='Most played'
             icon={<FaDice />}
         >
-            <div className='grid grid-cols-1 gap-6 md:grid-cols-3 my-auto'>
+            <div className='grid gap-6 md:grid-cols-3 grid-cols-3 my-auto'>
                 <div>
                     <h3 className='text-3xl text-indigo-100 font-bold text-center mb-2'>Games</h3>
                     <ul className='text-indigo-200'>

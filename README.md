@@ -127,11 +127,11 @@ In the project directory, you can run:
 
 - [x] Better looking landing page with animation
 - [x] Added *FAQ* page
-- [ ] Added *About* page
+- [x] Added *About* page
 - [x] Saving last statistics to local storage
 - [ ] Replaced all Flowbite components and removed package
-- [ ] Rearranged layout stays saved in local storage
-- [ ] Improved the wobble animation when rearranging the layout for large cards
+- [x] Rearranged layout stays saved in local storage
+- [x] Improved the wobble animation when rearranging the layout for large cards
 - [ ] When rearranging, the moving card is always in the foreground
 - [ ] Added internationalisation with i18n
 - [ ] Added at least three languages
