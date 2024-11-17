@@ -11,7 +11,7 @@ export const LandingPageChart = ({ loaded }: LandingPageChartProps) => {
         visible: {
             pathLength: 1,
             transition: {
-                duration: 4,
+                duration: 2.5,
                 ease: 'easeOut',
             },
             
