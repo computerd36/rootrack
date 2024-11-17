@@ -49,7 +49,7 @@ export function StatsCounter({ loaded, setLoaded }: StatsCounterProps) {
         if (loaded) {
             setTimeout(() => {
                 setShowTimer(true);
-            }, 3500);
+            }, 2200);
         }
     }, [loaded]);
 
@@ -59,7 +59,7 @@ export function StatsCounter({ loaded, setLoaded }: StatsCounterProps) {
         <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={loaded ? { scale: 1, opacity: 1 } : {}}
-            transition={{ delay: 3.8, duration: 1, ease: 'easeInOut', type: "spring", stiffness: 120 }}
+            transition={{ delay: 2.4, duration: 1, ease: 'easeInOut', type: "spring", stiffness: 120 }}
             className='md:mr-12 my-auto px-6'
         >
             <div className='relative text-yellow-300 font-bold 2xl:text-9xl xl:text-7xl text-6xl '>
