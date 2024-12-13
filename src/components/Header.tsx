@@ -23,9 +23,9 @@ export default function Header() {
                 </Link>
 
                 <div className='w-full flex items-center justify-center md:gap-8 xl:gap-12 2xl:gap-16 max-w-[800px] collapse md:visible'>
+                    <Link to='/about' className={`text-2xl ${pathname == "/about" ? 'text-gray-500 pointer-events-none' : 'text-yellow-400 hover:text-yellow-300'}`}>About</Link>
                     <Link to='/faq' className={`text-2xl ${pathname == "/faq" ? 'text-gray-500 pointer-events-none' : 'text-yellow-400 hover:text-yellow-300'}`}>FAQ</Link>
                     <Link to='https://github.com/computerd36/rootrack' className='text-2xl text-yellow-400 hover:text-yellow-300' target='_blank'>Repository</Link>
-                    <Link to='/about' className={`text-2xl ${pathname == "/about" ? 'text-gray-500 pointer-events-none' : 'text-yellow-400 hover:text-yellow-300'}`}>About</Link>
                 </div>
 
                 <div className='flex gap-2'>
