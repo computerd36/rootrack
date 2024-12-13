@@ -20,7 +20,7 @@ import { getGameName } from '../util/gameName';
 
 // Icons
 import { PiHandDepositBold, PiHandWithdrawBold } from 'react-icons/pi';
-import { FaCheck, FaDollarSign, FaDownload, FaMinus, FaPercentage, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaCoffee, FaDollarSign, FaDownload, FaMinus, FaPercentage, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import { FaMoneyBillTransfer } from 'react-icons/fa6';
 
 
@@ -134,7 +134,7 @@ export function PageStats() {
                             ariaLabel='Rearrange stats'
                         >Rearrange</Button>
                     }
-                    <div className={`flex gap-4 ${(isRearranging || !isDownloadVisible) ? 'hidden' : ''}`}>
+                    <div className={`flex gap-4 ${(isRearranging) ? 'hidden' : ''}`}>
                         <Button
                             icon={<FaTrash />}
                             size='xl'
@@ -147,7 +147,9 @@ export function PageStats() {
                             size='xl'
                             onClick={htmlToImageConvert}
                             ariaLabel='Download stats'
+                            className={`${isDownloadVisible ? '' : 'invisible'}`}
                         >Download</Button>
+
                     </div>
                 </div>
             </div>
@@ -356,6 +358,22 @@ export function PageStats() {
 
                     </ResponsiveReactGridLayout >
                 </div>
+            </div>
+
+            <div className='md:w-[730px] xl:w-[920px] 2xl:w-[1240px] mx-auto flex justify-center gap-4 mt-8 px-[20px]'>
+                <p className='text-yellow-400 flex items-center gap-2 flex-wrap'>
+                    Support this project by
+                    <Button
+                        ariaLabel={'Link to buymeacoffe'}
+                        linkTo='https://www.buymeacoffee.com/36it'
+                        size='sm'
+                        icon={<FaCoffee />}
+                        className='inline-flex'
+                    >
+                        buying me a coffee
+                    </Button>
+                    or telling others about it.
+                </p>
             </div>
         </div >
     );

@@ -20,7 +20,7 @@ export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLa
         } ${className}`;
 
     const regularClasses = `text-yellow-400 outline outline-2 hover:outline-4 outline-yellow-400 hover:outline-yellow-300 hover:text-yellow-300`;
-    const invertedClasses = `bg-yellow-300 text-slate-950 hover:bg-yellow-400`;
+    const invertedClasses = `bg-yellow-300 text-slate-950 hover:bg-yellow-400 transition-all`;
 
     const sizeClass = `text-${size ? size : 'md'}`;
     const classes = `${baseClasses} ${inverted ? invertedClasses : regularClasses} ${sizeClass}`;
