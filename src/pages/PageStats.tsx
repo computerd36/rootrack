@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 // Context
 import { useBettingData } from '../hooks/bettingDataContext';
@@ -25,8 +25,7 @@ import { FaMoneyBillTransfer } from 'react-icons/fa6';
 
 
 // Modules
-import { WidthProvider, Responsive } from "react-grid-layout";
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import { Responsive } from "react-grid-layout/legacy";
 import { toPng } from 'html-to-image';
 import { BsFillGrid1X2Fill } from 'react-icons/bs';
 import { useBettingStats } from '../hooks/useBettingStats';
@@ -48,7 +47,22 @@ export function PageStats() {
     const [isRearranging, setIsRearranging] = useState(false);
     const [isDownloadVisible, setIsDownloadVisible] = useState(true);
     const statsRef = useRef(null);
+    const observerRef = useRef<ResizeObserver | null>(null);
+    const [containerWidth, setContainerWidth] = useState(0);
 
+    const gridContainerRef = useCallback((node: HTMLDivElement | null) => {
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+            observerRef.current = null;
+        }
+        if (!node) return;
+        setContainerWidth(node.offsetWidth);
+        observerRef.current = new ResizeObserver((entries) => {
+            const width = entries[0]?.contentRect.width;
+            if (width) setContainerWidth(width);
+        });
+        observerRef.current.observe(node);
+    }, []);
 
     // shake animation if the user is rearranging the cards
     const shakeVariants = {
@@ -106,7 +120,7 @@ export function PageStats() {
 
     return (
         <div className='py-24'>
-            <div className='md:w-[730px] xl:w-[920px] 2xl:w-[1240px] mx-auto flex flex-col gap-6'>
+            <div className='md:w-182.5 xl:w-230 2xl:w-310 mx-auto flex flex-col gap-6'>
 
                 <h1 className='text-5xl text-white mx-5 md:mx-0'>Current Roobet stats of <span className='font-bold text-yellow-400'>{stats.userName}</span></h1>
 
@@ -154,10 +168,11 @@ export function PageStats() {
                 </div>
             </div>
 
-            <div className='md:w-[770px] xl:w-[960px] 2xl:w-[1280px] mx-auto relative' >
+            <div className='md:w-192.5 xl:w-240 2xl:w-7xl mx-auto relative' ref={gridContainerRef}>
                 <div ref={statsRef}>
-                    <ResponsiveReactGridLayout
+                    {containerWidth > 0 && <Responsive
                         className="layout"
+                        width={containerWidth}
                         layouts={{ lg: layout }}
                         cols={{ lg: 9, md: 9, sm: 9, xs: 3, xxs: 3 }}
                         rowHeight={180}
@@ -165,7 +180,7 @@ export function PageStats() {
                         useCSSTransforms={false}
                         isDraggable={isRearranging}
                         onLayoutChange={(layout) => {
-                            if (isRearranging) setLayout(layout);
+                            if (isRearranging) setLayout([...layout]);
                         }}
                     >
                         <motion.div
@@ -356,7 +371,7 @@ export function PageStats() {
                         </motion.div>
 
 
-                    </ResponsiveReactGridLayout >
+                    </Responsive>}
                 </div>
             </div>
 

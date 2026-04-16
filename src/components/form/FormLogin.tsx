@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { Button } from '../UI/Button';
 import { FaInfoCircle, FaSignInAlt } from 'react-icons/fa';
 import { StatsFoundModal } from '../modals/StatsFoundModal';
+import { ApiChangeModal } from '../modals/ApiChangeModal';
 
 export function FormLogin() {
-
+    const [apiModalDismissed, setApiModalDismissed] = useState(false);
 
     return (
         <>
-            <StatsFoundModal />
+            <ApiChangeModal onClose={() => setApiModalDismissed(true)} />
+            {apiModalDismissed && <StatsFoundModal />}
             <div className='flex flex-col justify-center h-full'>
                 <h2 className='text-white text-2xl text-left font-bold '>Log in on Roobet</h2>
                 <h3 className='text-indigo-300 text-sm text-left h-4 mt-2 flex items-center gap-1'>

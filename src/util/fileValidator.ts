@@ -5,7 +5,7 @@ export function isValidDeposit(deposit: any): deposit is Deposit {
     return (
         typeof deposit === 'object' &&
         typeof deposit._id === 'string' &&
-        typeof deposit.id === 'string' &&
+        (typeof deposit.id === 'string' || deposit.id === undefined) &&
         typeof deposit.userId === 'string' &&
         typeof deposit.recipientAddress === 'string' &&
         typeof deposit.confirmations === 'number' &&

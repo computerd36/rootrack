@@ -14,7 +14,7 @@ export interface IButtonProps {
     inverted?: boolean;
 }
 
-export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLabel, isFullWidth, className, inverted }: IButtonProps) {
+export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLabel, isFullWidth, className, inverted }: Readonly<IButtonProps>) {
 
     const baseClasses = `rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-nowrap transition-all ${isFullWidth ? 'w-full' : ''
         } ${className}`;
@@ -22,7 +22,7 @@ export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLa
     const regularClasses = `text-yellow-400 outline outline-2 hover:outline-4 outline-yellow-400 hover:outline-yellow-300 hover:text-yellow-300`;
     const invertedClasses = `bg-yellow-300 text-slate-950 hover:bg-yellow-400 transition-all`;
 
-    const sizeClass = `text-${size ? size : 'md'}`;
+    const sizeClass = `text-${size || 'md'}`;
     const classes = `${baseClasses} ${inverted ? invertedClasses : regularClasses} ${sizeClass}`;
 
     if (disabled) {

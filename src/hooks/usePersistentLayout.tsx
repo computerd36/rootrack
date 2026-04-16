@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-
-interface LayoutItem {
-    i: string;
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-}
+import type { LayoutItem } from "react-grid-layout/legacy";
 
 export function usePersistentLayout(key: string, defaultLayout: LayoutItem[]): [LayoutItem[], (layout: LayoutItem[]) => void] {
     const [layout, setLayout] = useState<LayoutItem[]>(() => {
@@ -21,7 +14,7 @@ export function usePersistentLayout(key: string, defaultLayout: LayoutItem[]): [
     return [layout, setLayout];
 }
 
-export const defaultLayout = [
+export const defaultLayout: LayoutItem[] = [
     { i: 'cardDeposits', x: 0, y: 0, w: 3, h: 1 },
     { i: 'cardProfits', x: 3, y: 0, w: 3, h: 1 },
     { i: 'cardWithdrawals', x: 6, y: 0, w: 3, h: 1 },

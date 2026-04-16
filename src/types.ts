@@ -7,7 +7,7 @@ interface DepositMeta {
 
 export interface Deposit {
     _id: string;
-    id: string;
+    id?: string;
     userId: string;
     recipientAddress: string;
     confirmations: number;
