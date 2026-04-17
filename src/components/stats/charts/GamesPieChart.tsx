@@ -1,5 +1,6 @@
 import { FaChartPie } from 'react-icons/fa';
-import { PieChart, Pie, Tooltip, TooltipProps, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Tooltip, ResponsiveContainer } from 'recharts';
+import type { TooltipContentProps, PieLabelRenderProps } from 'recharts';
 import { StatsContainer } from '../StatsContainer';
 import { useState, useEffect } from 'react';
 
@@ -31,7 +32,10 @@ export const GamePieChart = ({ games }: GamePieChartProps) => {
                         cy="50%"
                         outerRadius={isMobile ? '50%' : 150}
                         fill="#8884d8"
-                        label={(entry) => entry.game.length > 15 ? entry.game.substring(0, 12) + '..' : entry.game}
+                        label={(entry: PieLabelRenderProps) => {
+                            const game = (entry as PieLabelRenderProps & { game: string }).game;
+                            return game.length > 15 ? game.substring(0, 12) + '..' : game;
+                        }}
                         paddingAngle={10}
                     />
                     <Tooltip content={CustomTooltip} />
@@ -41,7 +45,7 @@ export const GamePieChart = ({ games }: GamePieChartProps) => {
     );
 }
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload }: TooltipContentProps) => {
     if (active && payload && payload.length) {
         return (
             <div className="backdrop-blur-sm bg-white/10 px-3 py-2 rounded-xl text-white">

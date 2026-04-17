@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, TooltipProps, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import type { TooltipContentProps } from 'recharts';
 import { useBettingData } from '../../../hooks/bettingDataContext';
 import { format, parseISO } from 'date-fns';
 import { FaChartLine } from 'react-icons/fa';
@@ -80,11 +81,11 @@ export function ProfitLineChart() {
 
 
 
-const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload, label }: TooltipContentProps) => {
     if (active && payload && payload.length) {
         return (
             <div className="backdrop-blur-sm bg-white/10 px-3 py-2 rounded-xl text-white">
-                <p className="label">{label} <ColorizedAmount>{payload[0].value!.toFixed(2)}</ColorizedAmount></p>
+                <p className="label">{label} <ColorizedAmount>{Number(payload[0].value).toFixed(2)}</ColorizedAmount></p>
             </div>
         );
     }

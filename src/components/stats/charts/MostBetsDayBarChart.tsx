@@ -1,5 +1,6 @@
 import { IoCalendar } from "react-icons/io5";
-import { Bar, BarChart, ResponsiveContainer, XAxis, TooltipProps, Tooltip } from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, Tooltip } from "recharts";
+import type { TooltipContentProps } from "recharts";
 import { StatsContainer } from "../StatsContainer";
 
 
@@ -26,7 +27,7 @@ export default function MostBetsDayBarChart(props: Readonly<MostBetsDayBarChartP
     );
 }
 
-const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload }: TooltipContentProps) => {
     if (active && payload && payload.length) {
         return (
             <div className="backdrop-blur-sm bg-white/10 px-3 py-2 rounded-xl text-white">
