@@ -16,7 +16,7 @@ export interface IButtonProps {
 
 export function Button({ children, icon, size, onClick, linkTo, disabled, ariaLabel, isFullWidth, className, inverted }: Readonly<IButtonProps>) {
 
-    const baseClasses = `rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-nowrap transition-all ${isFullWidth ? 'w-full' : ''
+    const baseClasses = `rounded-xl px-4 py-2 flex items-center justify-center gap-2 transition-all ${isFullWidth ? 'w-full' : ''
         } ${className}`;
 
     const regularClasses = `text-yellow-400 outline outline-2 hover:outline-4 outline-yellow-400 hover:outline-yellow-300 hover:text-yellow-300`;

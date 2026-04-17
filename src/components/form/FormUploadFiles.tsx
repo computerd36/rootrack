@@ -66,8 +66,8 @@ export function FormUploadFiles() {
         <div className='flex flex-col justify-between h-full gap-3'>
             <div>
                 <h2 className='text-white text-2xl text-left font-bold'>Drop your files from Roobet</h2>
-                <h3 className='text-indigo-300 text-sm text-left h-4 mt-2 flex items-center gap-1'>
-                    <FaInfoCircle />  Calculations are processed locally on your computer, no files are sent to external servers.
+                <h3 className='text-indigo-300 text-sm text-left mt-2 flex items-start gap-1'>
+                    <FaInfoCircle className='shrink-0 mt-0.5' />  Calculations are processed locally on your computer, no files are sent to external servers.
                 </h3>
             </div>
 
@@ -80,7 +80,7 @@ export function FormUploadFiles() {
                 <p className='text-indigo-300/50'>Drag & drop the files you just downloaded, or click to select files</p>
             </div>
 
-            <div className='flex justify-center gap-8 mb-4'>
+            <div className='flex flex-wrap justify-center gap-x-8 gap-y-2 mb-4'>
                 <h2 className='text-white text-md font-semibold flex items-center gap-2'>
                     {filesStatus.withdrawals ? <FaCheckCircle color='green' /> : <FaCircleXmark color='red' />} Withdrawals
                 </h2>

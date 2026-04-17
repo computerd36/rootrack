@@ -51,7 +51,7 @@ export function StatsMoneyCard(props: Readonly<IStatsMoneyCardProps>) {
             icon={icon}
         >
             <Tooltip content={explanation}>
-                <h3 className='sm:text-5xl md:text-4xl xl:text-5xl 2xl:text-6xl text-indigo-100 font-bold'>
+                <h3 className='text-3xl sm:text-5xl md:text-4xl xl:text-5xl 2xl:text-6xl text-indigo-100 font-bold truncate max-w-full'>
                     {displayValue}
                 </h3>
             </Tooltip>

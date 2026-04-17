@@ -17,11 +17,12 @@ export function FormDownloadBets({ keybind }: Readonly<FormDownloadBetsProps>) {
     return (
         <div className='flex flex-col justify-center h-full'>
             <h2 className='text-white text-2xl text-left font-bold'> Download your bets from Roobet</h2>
-            <h3 className='text-indigo-300 text-sm text-left h-4 mt-2 flex items-center gap-1'>
-                <FaInfoCircle /> After clicking the download button, press <Keybind>{keybind}</Keybind> + <Keybind>S</Keybind> in the new tab to save the file.
+            <h3 className='text-indigo-300 text-sm text-left mt-2 flex items-start gap-1'>
+                <FaInfoCircle className='shrink-0 mt-0.5' />
+                <span>After clicking the download button, press <span className='inline-flex items-center gap-1 whitespace-nowrap'><Keybind>{keybind}</Keybind> + <Keybind>S</Keybind></span> in the new tab to save the file.</span>
             </h3>
 
-            <div className='flex my-6 gap-2'>
+            <div className='flex flex-col sm:flex-row my-6 gap-2'>
                 <Tooltip content='Larger bet selections may result in increased file size and longer download times'>
                     <Dropdown label={`Last ${betsLimit / 1000}k bets`} inverted>
                         <DropdownItem onClick={() => setBetsLimit(10000)}>Last 10k bets</DropdownItem>

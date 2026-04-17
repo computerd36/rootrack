@@ -122,20 +122,20 @@ export function PageStats() {
         <div className='py-24'>
             <div className='md:w-182.5 xl:w-230 2xl:w-310 mx-auto flex flex-col gap-6'>
 
-                <h1 className='text-5xl text-white mx-5 md:mx-0'>Current Roobet stats of <span className='font-bold text-yellow-400'>{stats.userName}</span></h1>
+                <h1 className='text-3xl md:text-5xl text-white mx-5 md:mx-0'>Current Roobet stats of <span className='font-bold text-yellow-400'>{stats.userName}</span></h1>
 
-                <div className='flex justify-between mx-5 md:mx-0'>
+                <div className='flex flex-wrap justify-between gap-2 mx-5 md:mx-0'>
                     {isRearranging ?
                         <>
                             <Button
                                 icon={<FaCheck />}
-                                size='xl'
+                                size='md'
                                 onClick={() => setIsRearranging(!isRearranging)}
                                 ariaLabel='Confirm'
                             >Confirm</Button>
                             <Button
                                 icon={<TiArrowBack />}
-                                size='xl'
+                                size='md'
                                 onClick={() => setLayout(defaultLayout)}
                                 ariaLabel='Reset Layout'
                             >Reset Layout</Button>
@@ -143,22 +143,22 @@ export function PageStats() {
                         :
                         <Button
                             icon={<BsFillGrid1X2Fill />}
-                            size='xl'
+                            size='md'
                             onClick={() => setIsRearranging(!isRearranging)}
                             ariaLabel='Rearrange stats'
                         >Rearrange</Button>
                     }
-                    <div className={`flex gap-4 ${(isRearranging) ? 'hidden' : ''}`}>
+                    <div className={`flex gap-2 md:gap-4 ${(isRearranging) ? 'hidden' : ''}`}>
                         <Button
                             icon={<FaTrash />}
-                            size='xl'
+                            size='md'
                             onClick={resetStats}
                             ariaLabel='Delete stats'
                         >Delete</Button>
 
                         <Button
                             icon={<FaDownload />}
-                            size='xl'
+                            size='md'
                             onClick={htmlToImageConvert}
                             ariaLabel='Download stats'
                             className={`${isDownloadVisible ? '' : 'invisible'}`}

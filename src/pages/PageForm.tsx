@@ -27,7 +27,7 @@ export function PageForm() {
 
     return (
         <div className='w-full h-full bg-slate-950 flex items-center justify-center'>
-            <div className='xl:w-1/2 md:w-full max-w-[800px] bg-indigo-950 rounded-xl flex flex-col justify-between p-5 m-5 border-4 border-yellow-400/80'>
+            <div className='xl:w-1/2 md:w-full max-w-[800px] bg-indigo-950 rounded-xl flex flex-col justify-between p-3 sm:p-5 m-3 sm:m-5 border-4 border-yellow-400/80 overflow-hidden'>
                 {step === 1 && <FormLogin />}
                 {step === 2 && <FormDownloadFiles keybind={ctrlKeybind} />}
                 {step === 3 && <FormDownloadBets keybind={ctrlKeybind} />}

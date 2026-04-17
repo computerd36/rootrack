@@ -13,7 +13,7 @@ export default function Header() {
 
     return (
         <div className="w-full">
-            <div className="m-8 px-2 py-2 rounded-2xl flex items-center justify-between">
+            <div className="m-4 md:m-8 px-2 py-2 rounded-2xl flex items-center justify-between">
                 <Link
                     to={'/'}
                     aria-label='Rootrack Logo (Go to homepage)'
@@ -22,7 +22,7 @@ export default function Header() {
                     <h1 className='text-4xl text-yellow-300 leading-none'>Rootrack</h1>
                 </Link>
 
-                <div className='w-full flex items-center justify-center md:gap-8 xl:gap-12 2xl:gap-16 max-w-[800px] collapse md:visible'>
+                <div className='w-full hidden md:flex items-center justify-center md:gap-8 xl:gap-12 2xl:gap-16 max-w-[800px]'>
                     <Link to='/about' className={`text-2xl ${pathname == "/about" ? 'text-gray-500 pointer-events-none' : 'text-yellow-400 hover:text-yellow-300'}`}>About</Link>
                     <Link to='/faq' className={`text-2xl ${pathname == "/faq" ? 'text-gray-500 pointer-events-none' : 'text-yellow-400 hover:text-yellow-300'}`}>FAQ</Link>
                     <Link to='https://github.com/computerd36/rootrack' className='text-2xl text-yellow-400 hover:text-yellow-300' target='_blank'>Repository</Link>

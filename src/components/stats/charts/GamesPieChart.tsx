@@ -1,12 +1,21 @@
 import { FaChartPie } from 'react-icons/fa';
 import { PieChart, Pie, Tooltip, TooltipProps, ResponsiveContainer } from 'recharts';
 import { StatsContainer } from '../StatsContainer';
+import { useState, useEffect } from 'react';
 
 interface GamePieChartProps {
     games: { game: string, count: number }[];
 }
 
 export const GamePieChart = ({ games }: GamePieChartProps) => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <StatsContainer
             name='Bets per game'
@@ -20,7 +29,7 @@ export const GamePieChart = ({ games }: GamePieChartProps) => {
                         data={games}
                         cx="50%"
                         cy="50%"
-                        outerRadius={150}
+                        outerRadius={isMobile ? '50%' : 150}
                         fill="#8884d8"
                         label={(entry) => entry.game.length > 15 ? entry.game.substring(0, 12) + '..' : entry.game}
                         paddingAngle={10}
