@@ -1,9 +1,12 @@
 {
   "name": "rootrack",
-  "description": "Rootrack is a React app designed to help Roobet users track and visualize their wins and losses, filling the gap left by RooBet’s lack of this functionality.",
+  "description": "Rootrack is a React app designed to help Roobet users track and visualize their wins and losses, filling the gap left by Roobet’s lack of this functionality.",
   "private": true,
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "Deniz Petzold",
   "type": "module",
+  "homepage": "https://www.rootrack.me",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
