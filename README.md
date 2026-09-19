@@ -1,10 +1,24 @@
 # Rootrack
 
-**Track Your Betting Journey with Ease**
+**Real Insights Into Your Roobet Gambling Behavior**
 
-The ultimate tool for tracking your profits, losses, and trends on Roobet. Gain valuable insights with a wide array of statistics and charts. User-friendly and completely free to use.
+Rootrack is a transparency tool for players on [Roobet](https://roobet.com/), a crypto online casino. Roobet doesn't give users an easy way to see their full betting history, deposits, withdrawals, and most importantly their real net losses. Rootrack fills that gap: it pulls your data directly from Roobet's backend, processes everything locally in your browser, and turns it into clear statistics and charts so you can actually see how you're doing.
+
+Since launching, Rootrack has helped **over 1,200 users** get an honest picture of their gambling behavior.
 
 > **Disclaimer:** _Rootrack is an independent tool and is not affiliated with Roobet in any way. It was created to help Roobet users gain better insights into their gambling behavior by providing detailed tracking and analysis of their betting activities._
+
+### A note on Roobet's API changes
+
+Roobet has been actively restricting the API permissions available to users, shrinking the amount of historical data you can pull, first from unlimited to 12 months, and now down to just 6 months. This makes it harder for people to see the full picture of what they've actually lost, and it's outside of my control as the developer of this tool.
+
+If there's enough demand, I may build a follow-up tool that lets you combine data from multiple timeframes to reconstruct a more complete picture despite these new limits. If that's something you'd want, let me know.
+
+---
+
+## Screenshot
+
+![Rootrack Roobet Statistics](https://res.cloudinary.com/jwb6swpg/image/upload/v1789825388/Screenshot_2026-09-19_at_15-36-54_Rootrack_Roobet_Statistics_oohrvl.png)
 
 ---
 
